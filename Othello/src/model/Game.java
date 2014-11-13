@@ -21,11 +21,14 @@ public class Game {
     
     //Attributes
     private Player player1;
-    private IA player2;
+    private Player player2;
     private Player currentPlayer;
     private int [][] board;
     private Set<Integer> placeable;
 
+    /******************
+     * Initialisation *
+     ******************/
     public Game() {
         board = new int [gameSize][gameSize];
         // In the all code "i" will represent row et "j" column
@@ -49,17 +52,57 @@ public class Game {
         placeable.add(2*gameSize+3);
         placeable.add(5*gameSize+4);
         placeable.add(4*gameSize+5);
+        
+        //Players initialization (Temporar init)
+        player1 = new Player("Bernard", black);
+        currentPlayer = player1;
+        player2 = new IA("Bot Ur Ass", white);
     }
     
+    /**************************************************************************
+    *                        Location tools                                   *
+    * desc : The location will be an integer generated thanks to the position
+    * coordinates. The minLocation=0, maxlocation = gameSize x gameSize -1.
+    * 
+    * - int getLocation(i,j) permits to generate the location integer
+    * 
+    * - setLocation(location, i, j) permits to set position coordinates from
+    *   the integer location
+    ***************************************************************************/
     static int getLocation(int i, int j){
         return gameSize*i +j;
     }
     
-    static void setLocation(int location, int i, int j){
-        j=location%gameSize;
-        i=(location-j)/gameSize;
+    static Location setLocation(int location){
+        int temp = location%gameSize;
+        return new Location((location-temp)/gameSize, temp);
     }
     
+    /**************************************************************************
+     *                      System tools                                      *
+     * - getEnemiesNeighbors(i, j)
+     * - getAlliesNeighbors(i, j)
+     * @param i,j : Location coordinates
+     * @return Set<Integer> : Enemies/Allies Neighbors Array
+     *************************************************************************/
+    Set<Integer> getOppositeNeighboors(int i, int  j){
+        Set res = new HashSet<>();
+        /*int iMin, iMax, jMin, jMax;
+        (i>0) ? iMin=(i-1):iMin=i;
+        (i<(gameSize-1)) ? iMax=i+1:iMax=i;
+        for(;iMin<iMax;iMin++){
+            
+        }*/
+        return res;
+    }
+    /**************************************************************************
+     *                      System functions                                  *
+     * - updateBoard(i, j)
+     * - updatePlaceable()
+     *************************************************************************/
+    public void updateBoard(int i,int j){
+        
+    }
     @Override
     public String toString() {
         String res="";
@@ -79,6 +122,10 @@ public class Game {
     public static void main(String[] args) {
         Game game = new Game();
         System.out.println(game);
+        Location l = setLocation(35);
+        int i= l.getRow();
+        int j= l.getCol();
+        System.out.println("i = "+i+"; j = "+j);
     }
     
 }

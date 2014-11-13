@@ -11,5 +11,17 @@ package model;
  * @author Rémy
  */
 class Player {
+    String name;
+    int color;
+
+    public Player(String name, int color) {
+        this.name = name;
+        this.color = color;
+    }
+
+    public int getColor() {
+        return color;
+    }
+    
     
 }

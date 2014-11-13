@@ -10,5 +10,9 @@ package model;
  * @author Rémy
  */
 class IA extends Player{
+
+    public IA(String name, int color) {
+        super(name, color);
+    }
     
 }
