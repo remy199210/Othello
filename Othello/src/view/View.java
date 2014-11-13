@@ -28,17 +28,1053 @@ public class View extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel_board = new javax.swing.JPanel();
+        panel_piece1 = new javax.swing.JPanel();
+        panel_piece2 = new javax.swing.JPanel();
+        panel_piece3 = new javax.swing.JPanel();
+        panel_piece4 = new javax.swing.JPanel();
+        panel_piece5 = new javax.swing.JPanel();
+        panel_piece6 = new javax.swing.JPanel();
+        panel_piece7 = new javax.swing.JPanel();
+        panel_piece8 = new javax.swing.JPanel();
+        panel_piece9 = new javax.swing.JPanel();
+        panel_piece10 = new javax.swing.JPanel();
+        panel_piece11 = new javax.swing.JPanel();
+        panel_piece12 = new javax.swing.JPanel();
+        panel_piece13 = new javax.swing.JPanel();
+        panel_piece14 = new javax.swing.JPanel();
+        panel_piece15 = new javax.swing.JPanel();
+        panel_piece16 = new javax.swing.JPanel();
+        panel_piece17 = new javax.swing.JPanel();
+        panel_piece18 = new javax.swing.JPanel();
+        panel_piece19 = new javax.swing.JPanel();
+        panel_piece20 = new javax.swing.JPanel();
+        panel_piece21 = new javax.swing.JPanel();
+        panel_piece22 = new javax.swing.JPanel();
+        panel_piece23 = new javax.swing.JPanel();
+        panel_piece24 = new javax.swing.JPanel();
+        panel_piece25 = new javax.swing.JPanel();
+        panel_piece26 = new javax.swing.JPanel();
+        panel_piece27 = new javax.swing.JPanel();
+        panel_piece28 = new javax.swing.JPanel();
+        panel_piece29 = new javax.swing.JPanel();
+        panel_piece30 = new javax.swing.JPanel();
+        panel_piece31 = new javax.swing.JPanel();
+        panel_piece32 = new javax.swing.JPanel();
+        panel_piece33 = new javax.swing.JPanel();
+        panel_piece34 = new javax.swing.JPanel();
+        panel_piece35 = new javax.swing.JPanel();
+        panel_piece36 = new javax.swing.JPanel();
+        panel_piece37 = new javax.swing.JPanel();
+        panel_piece38 = new javax.swing.JPanel();
+        panel_piece39 = new javax.swing.JPanel();
+        panel_piece40 = new javax.swing.JPanel();
+        panel_piece41 = new javax.swing.JPanel();
+        panel_piece42 = new javax.swing.JPanel();
+        panel_piece43 = new javax.swing.JPanel();
+        panel_piece44 = new javax.swing.JPanel();
+        panel_piece45 = new javax.swing.JPanel();
+        panel_piece46 = new javax.swing.JPanel();
+        panel_piece47 = new javax.swing.JPanel();
+        panel_piece48 = new javax.swing.JPanel();
+        panel_piece49 = new javax.swing.JPanel();
+        panel_piece50 = new javax.swing.JPanel();
+        panel_piece51 = new javax.swing.JPanel();
+        panel_piece52 = new javax.swing.JPanel();
+        panel_piece53 = new javax.swing.JPanel();
+        panel_piece54 = new javax.swing.JPanel();
+        panel_piece55 = new javax.swing.JPanel();
+        panel_piece56 = new javax.swing.JPanel();
+        panel_piece57 = new javax.swing.JPanel();
+        panel_piece58 = new javax.swing.JPanel();
+        panel_piece59 = new javax.swing.JPanel();
+        panel_piece60 = new javax.swing.JPanel();
+        panel_piece61 = new javax.swing.JPanel();
+        panel_piece62 = new javax.swing.JPanel();
+        panel_piece63 = new javax.swing.JPanel();
+        panel_piece64 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panel_board.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panel_board.setOpaque(false);
+        panel_board.setLayout(new java.awt.GridLayout(8, 8));
+
+        panel_piece1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece1Layout = new javax.swing.GroupLayout(panel_piece1);
+        panel_piece1.setLayout(panel_piece1Layout);
+        panel_piece1Layout.setHorizontalGroup(
+            panel_piece1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece1Layout.setVerticalGroup(
+            panel_piece1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece1);
+
+        panel_piece2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece2Layout = new javax.swing.GroupLayout(panel_piece2);
+        panel_piece2.setLayout(panel_piece2Layout);
+        panel_piece2Layout.setHorizontalGroup(
+            panel_piece2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece2Layout.setVerticalGroup(
+            panel_piece2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece2);
+
+        panel_piece3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece3Layout = new javax.swing.GroupLayout(panel_piece3);
+        panel_piece3.setLayout(panel_piece3Layout);
+        panel_piece3Layout.setHorizontalGroup(
+            panel_piece3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece3Layout.setVerticalGroup(
+            panel_piece3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece3);
+
+        panel_piece4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece4Layout = new javax.swing.GroupLayout(panel_piece4);
+        panel_piece4.setLayout(panel_piece4Layout);
+        panel_piece4Layout.setHorizontalGroup(
+            panel_piece4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece4Layout.setVerticalGroup(
+            panel_piece4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece4);
+
+        panel_piece5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece5Layout = new javax.swing.GroupLayout(panel_piece5);
+        panel_piece5.setLayout(panel_piece5Layout);
+        panel_piece5Layout.setHorizontalGroup(
+            panel_piece5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece5Layout.setVerticalGroup(
+            panel_piece5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece5);
+
+        panel_piece6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece6Layout = new javax.swing.GroupLayout(panel_piece6);
+        panel_piece6.setLayout(panel_piece6Layout);
+        panel_piece6Layout.setHorizontalGroup(
+            panel_piece6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece6Layout.setVerticalGroup(
+            panel_piece6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece6);
+
+        panel_piece7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece7Layout = new javax.swing.GroupLayout(panel_piece7);
+        panel_piece7.setLayout(panel_piece7Layout);
+        panel_piece7Layout.setHorizontalGroup(
+            panel_piece7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece7Layout.setVerticalGroup(
+            panel_piece7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece7);
+
+        panel_piece8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece8Layout = new javax.swing.GroupLayout(panel_piece8);
+        panel_piece8.setLayout(panel_piece8Layout);
+        panel_piece8Layout.setHorizontalGroup(
+            panel_piece8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece8Layout.setVerticalGroup(
+            panel_piece8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece8);
+
+        panel_piece9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece9Layout = new javax.swing.GroupLayout(panel_piece9);
+        panel_piece9.setLayout(panel_piece9Layout);
+        panel_piece9Layout.setHorizontalGroup(
+            panel_piece9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece9Layout.setVerticalGroup(
+            panel_piece9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece9);
+
+        panel_piece10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece10Layout = new javax.swing.GroupLayout(panel_piece10);
+        panel_piece10.setLayout(panel_piece10Layout);
+        panel_piece10Layout.setHorizontalGroup(
+            panel_piece10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece10Layout.setVerticalGroup(
+            panel_piece10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece10);
+
+        panel_piece11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece11Layout = new javax.swing.GroupLayout(panel_piece11);
+        panel_piece11.setLayout(panel_piece11Layout);
+        panel_piece11Layout.setHorizontalGroup(
+            panel_piece11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece11Layout.setVerticalGroup(
+            panel_piece11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece11);
+
+        panel_piece12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece12Layout = new javax.swing.GroupLayout(panel_piece12);
+        panel_piece12.setLayout(panel_piece12Layout);
+        panel_piece12Layout.setHorizontalGroup(
+            panel_piece12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece12Layout.setVerticalGroup(
+            panel_piece12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece12);
+
+        panel_piece13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece13Layout = new javax.swing.GroupLayout(panel_piece13);
+        panel_piece13.setLayout(panel_piece13Layout);
+        panel_piece13Layout.setHorizontalGroup(
+            panel_piece13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece13Layout.setVerticalGroup(
+            panel_piece13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece13);
+
+        panel_piece14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece14Layout = new javax.swing.GroupLayout(panel_piece14);
+        panel_piece14.setLayout(panel_piece14Layout);
+        panel_piece14Layout.setHorizontalGroup(
+            panel_piece14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece14Layout.setVerticalGroup(
+            panel_piece14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece14);
+
+        panel_piece15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece15Layout = new javax.swing.GroupLayout(panel_piece15);
+        panel_piece15.setLayout(panel_piece15Layout);
+        panel_piece15Layout.setHorizontalGroup(
+            panel_piece15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece15Layout.setVerticalGroup(
+            panel_piece15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece15);
+
+        panel_piece16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece16Layout = new javax.swing.GroupLayout(panel_piece16);
+        panel_piece16.setLayout(panel_piece16Layout);
+        panel_piece16Layout.setHorizontalGroup(
+            panel_piece16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece16Layout.setVerticalGroup(
+            panel_piece16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece16);
+
+        panel_piece17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece17Layout = new javax.swing.GroupLayout(panel_piece17);
+        panel_piece17.setLayout(panel_piece17Layout);
+        panel_piece17Layout.setHorizontalGroup(
+            panel_piece17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece17Layout.setVerticalGroup(
+            panel_piece17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece17);
+
+        panel_piece18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece18Layout = new javax.swing.GroupLayout(panel_piece18);
+        panel_piece18.setLayout(panel_piece18Layout);
+        panel_piece18Layout.setHorizontalGroup(
+            panel_piece18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece18Layout.setVerticalGroup(
+            panel_piece18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece18);
+
+        panel_piece19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece19Layout = new javax.swing.GroupLayout(panel_piece19);
+        panel_piece19.setLayout(panel_piece19Layout);
+        panel_piece19Layout.setHorizontalGroup(
+            panel_piece19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece19Layout.setVerticalGroup(
+            panel_piece19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece19);
+
+        panel_piece20.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece20Layout = new javax.swing.GroupLayout(panel_piece20);
+        panel_piece20.setLayout(panel_piece20Layout);
+        panel_piece20Layout.setHorizontalGroup(
+            panel_piece20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece20Layout.setVerticalGroup(
+            panel_piece20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece20);
+
+        panel_piece21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece21Layout = new javax.swing.GroupLayout(panel_piece21);
+        panel_piece21.setLayout(panel_piece21Layout);
+        panel_piece21Layout.setHorizontalGroup(
+            panel_piece21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece21Layout.setVerticalGroup(
+            panel_piece21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece21);
+
+        panel_piece22.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece22Layout = new javax.swing.GroupLayout(panel_piece22);
+        panel_piece22.setLayout(panel_piece22Layout);
+        panel_piece22Layout.setHorizontalGroup(
+            panel_piece22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece22Layout.setVerticalGroup(
+            panel_piece22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece22);
+
+        panel_piece23.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece23Layout = new javax.swing.GroupLayout(panel_piece23);
+        panel_piece23.setLayout(panel_piece23Layout);
+        panel_piece23Layout.setHorizontalGroup(
+            panel_piece23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece23Layout.setVerticalGroup(
+            panel_piece23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece23);
+
+        panel_piece24.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece24Layout = new javax.swing.GroupLayout(panel_piece24);
+        panel_piece24.setLayout(panel_piece24Layout);
+        panel_piece24Layout.setHorizontalGroup(
+            panel_piece24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece24Layout.setVerticalGroup(
+            panel_piece24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece24);
+
+        panel_piece25.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece25Layout = new javax.swing.GroupLayout(panel_piece25);
+        panel_piece25.setLayout(panel_piece25Layout);
+        panel_piece25Layout.setHorizontalGroup(
+            panel_piece25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece25Layout.setVerticalGroup(
+            panel_piece25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece25);
+
+        panel_piece26.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece26Layout = new javax.swing.GroupLayout(panel_piece26);
+        panel_piece26.setLayout(panel_piece26Layout);
+        panel_piece26Layout.setHorizontalGroup(
+            panel_piece26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece26Layout.setVerticalGroup(
+            panel_piece26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece26);
+
+        panel_piece27.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece27Layout = new javax.swing.GroupLayout(panel_piece27);
+        panel_piece27.setLayout(panel_piece27Layout);
+        panel_piece27Layout.setHorizontalGroup(
+            panel_piece27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece27Layout.setVerticalGroup(
+            panel_piece27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece27);
+
+        panel_piece28.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece28Layout = new javax.swing.GroupLayout(panel_piece28);
+        panel_piece28.setLayout(panel_piece28Layout);
+        panel_piece28Layout.setHorizontalGroup(
+            panel_piece28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece28Layout.setVerticalGroup(
+            panel_piece28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece28);
+
+        panel_piece29.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece29Layout = new javax.swing.GroupLayout(panel_piece29);
+        panel_piece29.setLayout(panel_piece29Layout);
+        panel_piece29Layout.setHorizontalGroup(
+            panel_piece29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece29Layout.setVerticalGroup(
+            panel_piece29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece29);
+
+        panel_piece30.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece30Layout = new javax.swing.GroupLayout(panel_piece30);
+        panel_piece30.setLayout(panel_piece30Layout);
+        panel_piece30Layout.setHorizontalGroup(
+            panel_piece30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece30Layout.setVerticalGroup(
+            panel_piece30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece30);
+
+        panel_piece31.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece31Layout = new javax.swing.GroupLayout(panel_piece31);
+        panel_piece31.setLayout(panel_piece31Layout);
+        panel_piece31Layout.setHorizontalGroup(
+            panel_piece31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece31Layout.setVerticalGroup(
+            panel_piece31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece31);
+
+        panel_piece32.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece32Layout = new javax.swing.GroupLayout(panel_piece32);
+        panel_piece32.setLayout(panel_piece32Layout);
+        panel_piece32Layout.setHorizontalGroup(
+            panel_piece32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece32Layout.setVerticalGroup(
+            panel_piece32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece32);
+
+        panel_piece33.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece33Layout = new javax.swing.GroupLayout(panel_piece33);
+        panel_piece33.setLayout(panel_piece33Layout);
+        panel_piece33Layout.setHorizontalGroup(
+            panel_piece33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece33Layout.setVerticalGroup(
+            panel_piece33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece33);
+
+        panel_piece34.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece34Layout = new javax.swing.GroupLayout(panel_piece34);
+        panel_piece34.setLayout(panel_piece34Layout);
+        panel_piece34Layout.setHorizontalGroup(
+            panel_piece34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece34Layout.setVerticalGroup(
+            panel_piece34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece34);
+
+        panel_piece35.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece35Layout = new javax.swing.GroupLayout(panel_piece35);
+        panel_piece35.setLayout(panel_piece35Layout);
+        panel_piece35Layout.setHorizontalGroup(
+            panel_piece35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece35Layout.setVerticalGroup(
+            panel_piece35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece35);
+
+        panel_piece36.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece36Layout = new javax.swing.GroupLayout(panel_piece36);
+        panel_piece36.setLayout(panel_piece36Layout);
+        panel_piece36Layout.setHorizontalGroup(
+            panel_piece36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece36Layout.setVerticalGroup(
+            panel_piece36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece36);
+
+        panel_piece37.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece37Layout = new javax.swing.GroupLayout(panel_piece37);
+        panel_piece37.setLayout(panel_piece37Layout);
+        panel_piece37Layout.setHorizontalGroup(
+            panel_piece37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece37Layout.setVerticalGroup(
+            panel_piece37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece37);
+
+        panel_piece38.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece38Layout = new javax.swing.GroupLayout(panel_piece38);
+        panel_piece38.setLayout(panel_piece38Layout);
+        panel_piece38Layout.setHorizontalGroup(
+            panel_piece38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece38Layout.setVerticalGroup(
+            panel_piece38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece38);
+
+        panel_piece39.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece39Layout = new javax.swing.GroupLayout(panel_piece39);
+        panel_piece39.setLayout(panel_piece39Layout);
+        panel_piece39Layout.setHorizontalGroup(
+            panel_piece39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece39Layout.setVerticalGroup(
+            panel_piece39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece39);
+
+        panel_piece40.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece40Layout = new javax.swing.GroupLayout(panel_piece40);
+        panel_piece40.setLayout(panel_piece40Layout);
+        panel_piece40Layout.setHorizontalGroup(
+            panel_piece40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece40Layout.setVerticalGroup(
+            panel_piece40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece40);
+
+        panel_piece41.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece41Layout = new javax.swing.GroupLayout(panel_piece41);
+        panel_piece41.setLayout(panel_piece41Layout);
+        panel_piece41Layout.setHorizontalGroup(
+            panel_piece41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece41Layout.setVerticalGroup(
+            panel_piece41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece41);
+
+        panel_piece42.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece42Layout = new javax.swing.GroupLayout(panel_piece42);
+        panel_piece42.setLayout(panel_piece42Layout);
+        panel_piece42Layout.setHorizontalGroup(
+            panel_piece42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece42Layout.setVerticalGroup(
+            panel_piece42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece42);
+
+        panel_piece43.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece43Layout = new javax.swing.GroupLayout(panel_piece43);
+        panel_piece43.setLayout(panel_piece43Layout);
+        panel_piece43Layout.setHorizontalGroup(
+            panel_piece43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece43Layout.setVerticalGroup(
+            panel_piece43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece43);
+
+        panel_piece44.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece44Layout = new javax.swing.GroupLayout(panel_piece44);
+        panel_piece44.setLayout(panel_piece44Layout);
+        panel_piece44Layout.setHorizontalGroup(
+            panel_piece44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece44Layout.setVerticalGroup(
+            panel_piece44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece44);
+
+        panel_piece45.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece45Layout = new javax.swing.GroupLayout(panel_piece45);
+        panel_piece45.setLayout(panel_piece45Layout);
+        panel_piece45Layout.setHorizontalGroup(
+            panel_piece45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece45Layout.setVerticalGroup(
+            panel_piece45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece45);
+
+        panel_piece46.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece46Layout = new javax.swing.GroupLayout(panel_piece46);
+        panel_piece46.setLayout(panel_piece46Layout);
+        panel_piece46Layout.setHorizontalGroup(
+            panel_piece46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece46Layout.setVerticalGroup(
+            panel_piece46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece46);
+
+        panel_piece47.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece47Layout = new javax.swing.GroupLayout(panel_piece47);
+        panel_piece47.setLayout(panel_piece47Layout);
+        panel_piece47Layout.setHorizontalGroup(
+            panel_piece47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece47Layout.setVerticalGroup(
+            panel_piece47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece47);
+
+        panel_piece48.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece48Layout = new javax.swing.GroupLayout(panel_piece48);
+        panel_piece48.setLayout(panel_piece48Layout);
+        panel_piece48Layout.setHorizontalGroup(
+            panel_piece48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece48Layout.setVerticalGroup(
+            panel_piece48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece48);
+
+        panel_piece49.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece49Layout = new javax.swing.GroupLayout(panel_piece49);
+        panel_piece49.setLayout(panel_piece49Layout);
+        panel_piece49Layout.setHorizontalGroup(
+            panel_piece49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece49Layout.setVerticalGroup(
+            panel_piece49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece49);
+
+        panel_piece50.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece50Layout = new javax.swing.GroupLayout(panel_piece50);
+        panel_piece50.setLayout(panel_piece50Layout);
+        panel_piece50Layout.setHorizontalGroup(
+            panel_piece50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece50Layout.setVerticalGroup(
+            panel_piece50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece50);
+
+        panel_piece51.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece51Layout = new javax.swing.GroupLayout(panel_piece51);
+        panel_piece51.setLayout(panel_piece51Layout);
+        panel_piece51Layout.setHorizontalGroup(
+            panel_piece51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece51Layout.setVerticalGroup(
+            panel_piece51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece51);
+
+        panel_piece52.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece52Layout = new javax.swing.GroupLayout(panel_piece52);
+        panel_piece52.setLayout(panel_piece52Layout);
+        panel_piece52Layout.setHorizontalGroup(
+            panel_piece52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece52Layout.setVerticalGroup(
+            panel_piece52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece52);
+
+        panel_piece53.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece53Layout = new javax.swing.GroupLayout(panel_piece53);
+        panel_piece53.setLayout(panel_piece53Layout);
+        panel_piece53Layout.setHorizontalGroup(
+            panel_piece53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece53Layout.setVerticalGroup(
+            panel_piece53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece53);
+
+        panel_piece54.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece54Layout = new javax.swing.GroupLayout(panel_piece54);
+        panel_piece54.setLayout(panel_piece54Layout);
+        panel_piece54Layout.setHorizontalGroup(
+            panel_piece54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece54Layout.setVerticalGroup(
+            panel_piece54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece54);
+
+        panel_piece55.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece55Layout = new javax.swing.GroupLayout(panel_piece55);
+        panel_piece55.setLayout(panel_piece55Layout);
+        panel_piece55Layout.setHorizontalGroup(
+            panel_piece55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece55Layout.setVerticalGroup(
+            panel_piece55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece55);
+
+        panel_piece56.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece56Layout = new javax.swing.GroupLayout(panel_piece56);
+        panel_piece56.setLayout(panel_piece56Layout);
+        panel_piece56Layout.setHorizontalGroup(
+            panel_piece56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece56Layout.setVerticalGroup(
+            panel_piece56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece56);
+
+        panel_piece57.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece57Layout = new javax.swing.GroupLayout(panel_piece57);
+        panel_piece57.setLayout(panel_piece57Layout);
+        panel_piece57Layout.setHorizontalGroup(
+            panel_piece57Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece57Layout.setVerticalGroup(
+            panel_piece57Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece57);
+
+        panel_piece58.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece58Layout = new javax.swing.GroupLayout(panel_piece58);
+        panel_piece58.setLayout(panel_piece58Layout);
+        panel_piece58Layout.setHorizontalGroup(
+            panel_piece58Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece58Layout.setVerticalGroup(
+            panel_piece58Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece58);
+
+        panel_piece59.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece59Layout = new javax.swing.GroupLayout(panel_piece59);
+        panel_piece59.setLayout(panel_piece59Layout);
+        panel_piece59Layout.setHorizontalGroup(
+            panel_piece59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece59Layout.setVerticalGroup(
+            panel_piece59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece59);
+
+        panel_piece60.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece60Layout = new javax.swing.GroupLayout(panel_piece60);
+        panel_piece60.setLayout(panel_piece60Layout);
+        panel_piece60Layout.setHorizontalGroup(
+            panel_piece60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece60Layout.setVerticalGroup(
+            panel_piece60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece60);
+
+        panel_piece61.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece61Layout = new javax.swing.GroupLayout(panel_piece61);
+        panel_piece61.setLayout(panel_piece61Layout);
+        panel_piece61Layout.setHorizontalGroup(
+            panel_piece61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece61Layout.setVerticalGroup(
+            panel_piece61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece61);
+
+        panel_piece62.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece62Layout = new javax.swing.GroupLayout(panel_piece62);
+        panel_piece62.setLayout(panel_piece62Layout);
+        panel_piece62Layout.setHorizontalGroup(
+            panel_piece62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece62Layout.setVerticalGroup(
+            panel_piece62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece62);
+
+        panel_piece63.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece63Layout = new javax.swing.GroupLayout(panel_piece63);
+        panel_piece63.setLayout(panel_piece63Layout);
+        panel_piece63Layout.setHorizontalGroup(
+            panel_piece63Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece63Layout.setVerticalGroup(
+            panel_piece63Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece63);
+
+        panel_piece64.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout panel_piece64Layout = new javax.swing.GroupLayout(panel_piece64);
+        panel_piece64.setLayout(panel_piece64Layout);
+        panel_piece64Layout.setHorizontalGroup(
+            panel_piece64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+        panel_piece64Layout.setVerticalGroup(
+            panel_piece64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 17, Short.MAX_VALUE)
+        );
+
+        panel_board.add(panel_piece64);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(panel_board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addComponent(panel_board, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
 
         pack();
@@ -80,5 +1116,70 @@ public class View extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel panel_board;
+    private javax.swing.JPanel panel_piece1;
+    private javax.swing.JPanel panel_piece10;
+    private javax.swing.JPanel panel_piece11;
+    private javax.swing.JPanel panel_piece12;
+    private javax.swing.JPanel panel_piece13;
+    private javax.swing.JPanel panel_piece14;
+    private javax.swing.JPanel panel_piece15;
+    private javax.swing.JPanel panel_piece16;
+    private javax.swing.JPanel panel_piece17;
+    private javax.swing.JPanel panel_piece18;
+    private javax.swing.JPanel panel_piece19;
+    private javax.swing.JPanel panel_piece2;
+    private javax.swing.JPanel panel_piece20;
+    private javax.swing.JPanel panel_piece21;
+    private javax.swing.JPanel panel_piece22;
+    private javax.swing.JPanel panel_piece23;
+    private javax.swing.JPanel panel_piece24;
+    private javax.swing.JPanel panel_piece25;
+    private javax.swing.JPanel panel_piece26;
+    private javax.swing.JPanel panel_piece27;
+    private javax.swing.JPanel panel_piece28;
+    private javax.swing.JPanel panel_piece29;
+    private javax.swing.JPanel panel_piece3;
+    private javax.swing.JPanel panel_piece30;
+    private javax.swing.JPanel panel_piece31;
+    private javax.swing.JPanel panel_piece32;
+    private javax.swing.JPanel panel_piece33;
+    private javax.swing.JPanel panel_piece34;
+    private javax.swing.JPanel panel_piece35;
+    private javax.swing.JPanel panel_piece36;
+    private javax.swing.JPanel panel_piece37;
+    private javax.swing.JPanel panel_piece38;
+    private javax.swing.JPanel panel_piece39;
+    private javax.swing.JPanel panel_piece4;
+    private javax.swing.JPanel panel_piece40;
+    private javax.swing.JPanel panel_piece41;
+    private javax.swing.JPanel panel_piece42;
+    private javax.swing.JPanel panel_piece43;
+    private javax.swing.JPanel panel_piece44;
+    private javax.swing.JPanel panel_piece45;
+    private javax.swing.JPanel panel_piece46;
+    private javax.swing.JPanel panel_piece47;
+    private javax.swing.JPanel panel_piece48;
+    private javax.swing.JPanel panel_piece49;
+    private javax.swing.JPanel panel_piece5;
+    private javax.swing.JPanel panel_piece50;
+    private javax.swing.JPanel panel_piece51;
+    private javax.swing.JPanel panel_piece52;
+    private javax.swing.JPanel panel_piece53;
+    private javax.swing.JPanel panel_piece54;
+    private javax.swing.JPanel panel_piece55;
+    private javax.swing.JPanel panel_piece56;
+    private javax.swing.JPanel panel_piece57;
+    private javax.swing.JPanel panel_piece58;
+    private javax.swing.JPanel panel_piece59;
+    private javax.swing.JPanel panel_piece6;
+    private javax.swing.JPanel panel_piece60;
+    private javax.swing.JPanel panel_piece61;
+    private javax.swing.JPanel panel_piece62;
+    private javax.swing.JPanel panel_piece63;
+    private javax.swing.JPanel panel_piece64;
+    private javax.swing.JPanel panel_piece7;
+    private javax.swing.JPanel panel_piece8;
+    private javax.swing.JPanel panel_piece9;
     // End of variables declaration//GEN-END:variables
 }
