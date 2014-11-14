@@ -15,7 +15,7 @@ public class Game {
     public static final String RESET = "\u001B[0m";
     // Statics variables
     public static final int black =-1;
-    public static final int none  =0;
+    public static final int empty  =0;
     public static final int white =1;
     public static final int gameSize = 8;
     
@@ -34,7 +34,7 @@ public class Game {
         // In the all code "i" will represent row et "j" column
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
-                board[i][j]=none;
+                board[i][j]=empty;
             }
         }
         /*
@@ -80,35 +80,45 @@ public class Game {
     
     /**************************************************************************
      *                      System tools                                      *
-     * - getEnemiesNeighbors(i, j)
-     * - getAlliesNeighbors(i, j)
+     * - getNeighbors
+     * @param color : to know which type of neighbors we're searching for
      * @param i,j : Location coordinates
      * @return Set<Integer> : Enemies/Allies Neighbors Array
      *************************************************************************/
-    Set<Integer> getOppositeNeighboors(int i, int  j){
+    Set<Integer> getNeighbors(int color,int i, int  j){
         Set res = new HashSet<>();
-        /*int iMin, iMax, jMin, jMax;
-        (i>0) ? iMin=(i-1):iMin=i;
-        (i<(gameSize-1)) ? iMax=i+1:iMax=i;
-        for(;iMin<iMax;iMin++){
-            
-        }*/
+        int iMax=i<gameSize-1?i+1:i;
+        int jMax=j<gameSize-1?j+1:j;
+        for(int iMin=i>0?i-1:i;iMin<=iMax;iMin++){
+            for(int jMin=j>0?j-1:j;jMin<=jMax;jMin++){
+                if((iMin!=i || jMin!=j)&&board[iMin][jMin]==color){
+                    res.add(getLocation(iMin, jMin));
+                }
+            }
+        }
         return res;
     }
     /**************************************************************************
      *                      System functions                                  *
      * - updateBoard(i, j)
      * - updatePlaceable()
+     * @param i
+     * @param j
      *************************************************************************/
     public void updateBoard(int i,int j){
         
     }
-    @Override
-    public String toString() {
+    
+    /**
+     * Display functions
+     * @param highlight
+     * @return String
+     */
+    public String toString(Set<Integer> highlight) {
         String res="";
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
-                if(placeable.contains(getLocation(i, j)))
+                if(highlight.contains(getLocation(i, j)))
                     res+=RED;
                 if(board[i][j]>=0)
                     res+=" ";
@@ -118,14 +128,24 @@ public class Game {
         }
         return res;
     }
+    @Override
+    public String toString() {
+        String res="";
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                if(board[i][j]>=0)
+                    res+=" ";
+                res+=board[i][j]+" ";
+            }
+            res+="\n";
+        }
+        return res;
+    }
     
     public static void main(String[] args) {
         Game game = new Game();
-        System.out.println(game);
-        Location l = setLocation(35);
-        int i= l.getRow();
-        int j= l.getCol();
-        System.out.println("i = "+i+"; j = "+j);
+        System.out.println(game.toString(game.getNeighbors(black,3, 3)));
+        
     }
     
 }
