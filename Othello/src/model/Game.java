@@ -24,7 +24,7 @@ public class Game {
     private Player player2;
     private Player currentPlayer;
     private int [][] board;
-    private Set<Integer> placeable;
+    private Set<Location> placeable;
 
     /******************
      * Initialisation *
@@ -48,10 +48,10 @@ public class Game {
         
         //Now we can initialize the placeable tab because among rules Black Player always begins
         placeable = new HashSet<>();
-        placeable.add(3*gameSize+2);
-        placeable.add(2*gameSize+3);
-        placeable.add(5*gameSize+4);
-        placeable.add(4*gameSize+5);
+        placeable.add(new Location(3, 2));
+        placeable.add(new Location(2, 3));
+        placeable.add(new Location(4, 5));
+        placeable.add(new Location(5, 4));
         
         //Players initialization (Temporar init)
         player1 = new Player("Bernard", black);
@@ -61,41 +61,58 @@ public class Game {
     
     /**************************************************************************
     *                        Location tools                                   *
-    * desc : The location will be an integer generated thanks to the position
-    * coordinates. The minLocation=0, maxlocation = gameSize x gameSize -1.
-    * 
-    * - int getLocation(i,j) permits to generate the location integer
-    * 
-    * - setLocation(location, i, j) permits to set position coordinates from
-    *   the integer location
+    * - setBoard
+    * @param Location / i,j
+    * @param color
     ***************************************************************************/
-    static int getLocation(int i, int j){
-        return gameSize*i +j;
-    }
     
-    static Location setLocation(int location){
-        int temp = location%gameSize;
-        return new Location((location-temp)/gameSize, temp);
+    private void setBoard(Location location, int color){
+        board[location.getRow()][location.getCol()]=color;
+    }
+    private void setBoard(int i, int j, int color){
+        board[i][j]=color;
     }
     
     /**************************************************************************
      *                      System tools                                      *
+     * - hasNeighbors return a boolean
      * - getNeighbors
      * @param color : to know which type of neighbors we're searching for
      * @param i,j : Location coordinates
      * @return Set<Integer> : Enemies/Allies Neighbors Array
      *************************************************************************/
-    Set<Integer> getNeighbors(int color,int i, int  j){
-        Set res = new HashSet<>();
+    boolean hasNeighbors(int color, int i, int j){
         int iMax=i<gameSize-1?i+1:i;
         int jMax=j<gameSize-1?j+1:j;
         for(int iMin=i>0?i-1:i;iMin<=iMax;iMin++){
             for(int jMin=j>0?j-1:j;jMin<=jMax;jMin++){
                 if((iMin!=i || jMin!=j)&&board[iMin][jMin]==color){
-                    res.add(getLocation(iMin, jMin));
+                    return true;
                 }
             }
         }
+        return false;
+    }
+    Set<Location> getNeighbors(int color,int i, int  j){
+        Set<Location> res = new HashSet<>();
+        int iMax=i<gameSize-1?i+1:i;
+        int jMax=j<gameSize-1?j+1:j;
+        for(int iMin=i>0?i-1:i;iMin<=iMax;iMin++){
+            for(int jMin=j>0?j-1:j;jMin<=jMax;jMin++){
+                if((iMin!=i || jMin!=j)&&board[iMin][jMin]==color){
+                    res.add(new Location(iMin, jMin));
+                }
+            }
+        }
+        return res;
+    }
+    /**
+     * - getModifiedPieces()
+     * @param i,j
+     * @return Set<Integer>
+     */
+    private Set<Integer> getModifiedPieces(){
+        Set<Integer> res = new HashSet<>();
         return res;
     }
     /**************************************************************************
@@ -105,21 +122,39 @@ public class Game {
      * @param i
      * @param j
      *************************************************************************/
-    public void updateBoard(int i,int j){
+    public Set<Integer> updateBoard(int i,int j){
+        Set<Integer> res = new HashSet<>();
         
+        return res;
     }
     
+    public void updatePlaceable(){
+        int color = currentPlayer.getColor();
+        Set<Location> neighbors;//Contrary color neighbors
+        placeable.clear();
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                if(board[i][j]==empty){
+                    neighbors = getNeighbors(-color, i, j);
+                    if (!neighbors.isEmpty()) {
+                        
+                    }
+                }
+            }
+        }
+    }
     /**
      * Display functions
      * @param highlight
      * @return String
      */
-    public String toString(Set<Integer> highlight) {
+    public String toString(Set<Location> highlight) {
         String res="";
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
-                if(highlight.contains(getLocation(i, j)))
+                if(highlight.contains(new Location(i, j))){
                     res+=RED;
+                }
                 if(board[i][j]>=0)
                     res+=" ";
                 res+=board[i][j]+" "+RESET;

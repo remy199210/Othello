@@ -1,6 +1,6 @@
 package model;
 
-class Location {
+class Location{
     private int row;
     private int col;
 
@@ -17,5 +17,19 @@ class Location {
 
     public int getCol() {
         return col;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        Location l = (Location) o;
+        return row==l.row && col==l.col;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.row;
+        hash = 47 * hash + this.col;
+        return hash;
     }
 }
