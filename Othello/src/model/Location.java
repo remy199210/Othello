@@ -1,8 +1,13 @@
 package model;
 
-class Location{
+public class Location{
     private int row;
     private int col;
+
+    public Location() {
+        this.row = 0;
+        this.col = 0;
+    }
 
     public Location(int row, int col) {
         if(row<0 || col<0 || row>=Game.gameSize || col>=Game.gameSize)

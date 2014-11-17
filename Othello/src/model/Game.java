@@ -7,6 +7,7 @@
 package model;
 
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Game {
@@ -58,21 +59,30 @@ public class Game {
         currentPlayer = player1;
         player2 = new IA("Bot Ur Ass", white);
     }
-    
     /**************************************************************************
-    *                        Location tools                                   *
-    * - setBoard
-    * @param Location / i,j
-    * @param color
-    ***************************************************************************/
-    
-    private void setBoard(Location location, int color){
-        board[location.getRow()][location.getCol()]=color;
+     *                      Game Tools                                        *
+     * switchPlayer will change the current player
+     *************************************************************************/
+    private void switchPlayer(){
+        if(currentPlayer.getColor()==player1.getColor())
+            currentPlayer=player2;
+        else currentPlayer=player1;
     }
-    private void setBoard(int i, int j, int color){
-        board[i][j]=color;
+    /**
+     * 
+     */
+    public Player getWinner(){
+        int p1 = 0, p2 = 0;
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                if(board[i][j]==player1.getColor()) p1++;
+                if(board[i][j]==player2.getColor()) p2++;
+            }
+        }
+        if(p1>p2) return player1;
+        if(p1<p2) return player2;
+        return null;
     }
-    
     /**************************************************************************
      *                      System tools                                      *
      * - hasNeighbors return a boolean
@@ -93,7 +103,7 @@ public class Game {
         }
         return false;
     }
-    Set<Location> getNeighbors(int color,int i, int  j){
+    private Set<Location> getNeighbors(int color,int i, int  j){
         Set<Location> res = new HashSet<>();
         int iMax=i<gameSize-1?i+1:i;
         int jMax=j<gameSize-1?j+1:j;
@@ -107,28 +117,49 @@ public class Game {
         return res;
     }
     /**
-     * - getModifiedPieces()
-     * @param i,j
-     * @return Set<Integer>
+     * playableAxis determine if, on a specified axis, pieces will rotate
+     * @param i location's row
+     * @param j location's column
+     * @param iAxis row trajectory
+     * @param jAxis column trajectory
+     * @param color first color of the axis
+     * @return boolean which means if the move is possible
      */
-    private Set<Integer> getModifiedPieces(){
-        Set<Integer> res = new HashSet<>();
-        return res;
+    private boolean playableAxis(int color, int i, int j, int iAxis, int jAxis){
+        int iNext = i+iAxis,jNext = j+jAxis;
+        if(iNext>=0||jNext>=0||iNext>=gameSize||jNext>=gameSize){
+            if(board[iNext][jNext]==color)
+                return true;
+            if(board[iNext][jNext]==-color)
+                return playableAxis(color, iNext, jNext, iAxis, jAxis);
+        }
+        return false;
     }
-    /**************************************************************************
-     *                      System functions                                  *
-     * - updateBoard(i, j)
-     * - updatePlaceable()
-     * @param i
-     * @param j
-     *************************************************************************/
-    public Set<Integer> updateBoard(int i,int j){
-        Set<Integer> res = new HashSet<>();
-        
-        return res;
+    /**
+     * rotateAxis will apply move consequences
+     * @param i location's row
+     * @param j location's column
+     * @param iAxis row trajectory
+     * @param jAxis column trajectory
+     * @param color first color of the axis
+     * @param res save rotate locations
+     */
+    private boolean rotateAxis(int color, int i, int j, int iAxis, int jAxis, Set<Location> res){
+        board[i][j]=color;
+        res.add(new Location(i, j));
+        int iNext = i+iAxis,jNext = j+jAxis;
+        if(iNext>=0||jNext>=0||iNext>=gameSize||jNext>=gameSize){
+            if(board[iNext][jNext]==color)
+                return true;
+            if(board[iNext][jNext]==-color)
+                return rotateAxis(color, iNext, jNext, iAxis, jAxis, res);
+        }
+        return false;
     }
-    
-    public void updatePlaceable(){
+    /**
+     * updatePlaceable will update the placeable list after each update
+     */
+    private void updatePlaceable(){
         int color = currentPlayer.getColor();
         Set<Location> neighbors;//Contrary color neighbors
         placeable.clear();
@@ -137,20 +168,68 @@ public class Game {
                 if(board[i][j]==empty){
                     neighbors = getNeighbors(-color, i, j);
                     if (!neighbors.isEmpty()) {
-                        
+                        for(Location neighbor:neighbors){
+                            if(playableAxis(color, neighbor.getRow(), neighbor.getCol(),
+                                            neighbor.getRow()-i, neighbor.getCol()-j))
+                                placeable.add(new Location(i, j));
+                        }
                     }
                 }
             }
         }
     }
     /**
-     * Display functions
-     * @param highlight
-     * @return String
+     * isPlaceable
+     * @param l
+     * @return 
+     */
+    public boolean isPlaceable(Location l) {
+        return placeable.contains(l);
+    }
+    /**
+     * isPlaceable
+     * @param i
+     * @param j
+     * @return 
+     */
+    public boolean isPlaceable(int i, int j) {
+        return placeable.contains(new Location(i, j));
+    }
+    /**************************************************************************
+     *                      Public System functions                                  *
+     * updateBoard will update for each move the board
+     * @param i row of the new move
+     * @param j column of the new move
+     * @return Set<Location> modified locations list
+     *************************************************************************/
+    public Set<Location> updateBoard(int i,int j){
+        if(!isPlaceable(i, j))
+            throw new GameException("updateBoard : unplaceable location");
+        Set<Location> res = new HashSet<>();
+        int color = currentPlayer.getColor();
+        board[i][j]=color;
+        res.add(new Location(i, j));
+        Set<Location> neighbors = getNeighbors(-color, i, j);
+        if (!neighbors.isEmpty()) {
+            for(Location neighbor:neighbors){
+                rotateAxis(color, neighbor.getRow(), neighbor.getCol(),
+                           neighbor.getRow()-i, neighbor.getCol()-j,res);
+            }
+        }
+        switchPlayer();
+        updatePlaceable();
+        //On testera ici si placeable.isEmpty puis on getWinner et fin du game
+        return res;
+    }
+    /**
+     * Display functions with an highlight of a specified list of location
+     * @param highlight locations'list we want to highlight
+     * @return String to show the game in the consol
      */
     public String toString(Set<Location> highlight) {
-        String res="";
+        String res="    0  1  2  3  4  5  6  7\n___________________________\n";
         for (int i = 0; i < gameSize; i++) {
+            res+=i+"| ";
             for (int j = 0; j < gameSize; j++) {
                 if(highlight.contains(new Location(i, j))){
                     res+=RED;
@@ -179,8 +258,27 @@ public class Game {
     
     public static void main(String[] args) {
         Game game = new Game();
-        System.out.println(game.toString(game.getNeighbors(black,3, 3)));
-        
+        Scanner sc = new Scanner(System.in);
+        int i=0,j=0;
+        while(!game.placeable.isEmpty()){
+            System.out.println("Player : "+game.currentPlayer.getName());
+            System.out.println(RED+"Placeable locations"+RESET);
+            System.out.println(game.toString(game.placeable));
+            do{
+                System.out.print("Row : ");
+                if(sc.hasNextInt())
+                    i=sc.nextInt();
+                System.out.print("Column : ");
+                if (sc.hasNextInt())
+                    j=sc.nextInt();
+            }while(!game.isPlaceable(i, j));
+            System.out.println(RED+"Move Result"+RESET);
+            System.out.println(game.toString(game.updateBoard(i, j)));
+        }
+        Player winner = game.getWinner();
+        if(winner!=null)
+            System.out.println("The winner is "+winner.getName()+"!!");
+        else System.out.println("Null Game : There's no winner ...");
     }
     
 }
