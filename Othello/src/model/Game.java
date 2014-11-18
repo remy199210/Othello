@@ -127,7 +127,7 @@ public class Game {
      */
     private boolean playableAxis(int color, int i, int j, int iAxis, int jAxis){
         int iNext = i+iAxis,jNext = j+jAxis;
-        if(iNext>=0||jNext>=0||iNext>=gameSize||jNext>=gameSize){
+        if(iNext>=0&&jNext>=0&&iNext<gameSize&&jNext<gameSize){
             if(board[iNext][jNext]==color)
                 return true;
             if(board[iNext][jNext]==-color)
@@ -148,7 +148,7 @@ public class Game {
         board[i][j]=color;
         res.add(new Location(i, j));
         int iNext = i+iAxis,jNext = j+jAxis;
-        if(iNext>=0||jNext>=0||iNext>=gameSize||jNext>=gameSize){
+        if(iNext>=0&&jNext>=0&&iNext<gameSize&&jNext<gameSize){
             if(board[iNext][jNext]==color)
                 return true;
             if(board[iNext][jNext]==-color)
@@ -257,6 +257,7 @@ public class Game {
     }
     
     public static void main(String[] args) {
+        Location randomIA = new Location();
         Game game = new Game();
         Scanner sc = new Scanner(System.in);
         int i=0,j=0;
@@ -264,16 +265,17 @@ public class Game {
             System.out.println("Player : "+game.currentPlayer.getName());
             System.out.println(RED+"Placeable locations"+RESET);
             System.out.println(game.toString(game.placeable));
-            do{
+            /*do{
                 System.out.print("Row : ");
                 if(sc.hasNextInt())
                     i=sc.nextInt();
                 System.out.print("Column : ");
                 if (sc.hasNextInt())
                     j=sc.nextInt();
-            }while(!game.isPlaceable(i, j));
+            }while(!game.isPlaceable(i, j));*/
             System.out.println(RED+"Move Result"+RESET);
-            System.out.println(game.toString(game.updateBoard(i, j)));
+            randomIA=game.placeable.iterator().next();
+            System.out.println(game.toString(game.updateBoard(randomIA.getRow(), randomIA.getCol())));
         }
         Player winner = game.getWinner();
         if(winner!=null)
