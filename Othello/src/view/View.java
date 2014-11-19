@@ -11,10 +11,12 @@ import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
 import model.Game;
+import static model.Game.black;
+import static model.Game.empty;
 import static model.Game.gameSize;
+import static model.Game.white;
 
 /**
  *
@@ -24,29 +26,22 @@ public class View extends javax.swing.JFrame implements Observer {
 
     //The view has an instance of both the model and the controller in MVC design pattern
     private model.Game gameModel;
-    private controller.Controller controle;
-    private JPanel[][] board;
-    /**
-     * Creates new form Vue
-     */
-    public View() {
-        this(new Game());
-    }
+    private Case[][] board;
 
+    
     /**
      * Initialisation *
      * @param model
      */
     public View(Game model) {
         this.gameModel = model;
-        this.controle = new Controller(gameModel, this);
-        board = new JPanel [gameSize][gameSize];
+        board = new Case [gameSize][gameSize];
         initComponents();
         init();
     }
     
      /**
-     * init initialize the components not created by the form editor : othello grid, Listener
+     * init initialize the components not created by the form editor : othello grid
      */
     private void init(){
  
@@ -54,18 +49,60 @@ public class View extends javax.swing.JFrame implements Observer {
         
         for(int i = 0; i<gameSize;i++){
             for(int j = 0; j< gameSize; j++){
-                board[i][j]= new JPanel();
+                board[i][j]= new Case(i,j);
                 board[i][j].setBorder(myborder);
                 panel_board.add(board[i][j]);
-                board[i][j].addMouseListener(controle);
             }
         }
-        board[3][3].setBackground(Color.WHITE);
-        board[4][4].setBackground(Color.WHITE);
-        board[3][4].setBackground(Color.BLACK);
-        board[4][3].setBackground(Color.BLACK);  
+        initBoard();
     }
-
+    
+    public void initBoard() {
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                if(gameModel.isPlaceable(i, j))
+                    board[i][j].setPlaceable(true);
+                else if(gameModel.getColor(i, j)==black)
+                    board[i][j].setBlack();
+                else if(gameModel.getColor(i, j)==white)
+                    board[i][j].setWhite();
+            }
+        }
+    }
+    
+    /**
+     * To add a controller for this view
+     * @param controller 
+     */
+     public void addController(Controller controller) {
+        for(int i = 0; i<gameSize;i++){
+            for(int j = 0; j< gameSize; j++){
+                board[i][j].addMouseListener(controller);
+            }
+        }
+    
+     }
+        /**
+         * Implementation of Observer disgn pattern
+         * 
+         * @param o
+         * @param arg 
+         */
+    @Override
+    public void update(Observable o, Object arg) {
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                board[i][j].setEmpty();
+                if(gameModel.isPlaceable(i, j))
+                    board[i][j].setPlaceable(true);
+                else if(gameModel.getColor(i, j)==black)
+                    board[i][j].setBlack();
+                else if(gameModel.getColor(i, j)==white)
+                    board[i][j].setWhite();
+            }
+        }
+    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,7 +140,12 @@ public class View extends javax.swing.JFrame implements Observer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel panel_board;
+    // End of variables declaration//GEN-END:variables
+
+
+        /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -134,18 +176,9 @@ public class View extends javax.swing.JFrame implements Observer {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new View().setVisible(true);
+                new View(new Game()).setVisible(true);
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel panel_board;
-    // End of variables declaration//GEN-END:variables
-
-    /*implementation of Observer disgn pattern*/
-    @Override
-    public void update(Observable o, Object arg) {
-    
-    }
 }
+

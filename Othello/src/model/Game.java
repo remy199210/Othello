@@ -6,11 +6,14 @@
 
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Game {
+public class Game extends Observable {
     //colors
     public static final String RED = "\u001B[31m";
     public static final String RESET = "\u001B[0m";
@@ -26,6 +29,7 @@ public class Game {
     private Player currentPlayer;
     private int [][] board;
     private Set<Location> placeable;
+    private ArrayList<Observer> listObservateur = new ArrayList<Observer>();
 
     /******************
      * Initialisation *
@@ -195,6 +199,24 @@ public class Game {
     public boolean isPlaceable(int i, int j) {
         return placeable.contains(new Location(i, j));
     }
+     /**************************************************************************
+     *                      Observer design Patern                                       *
+     * 
+     * 
+     * @param obs
+     *************************************************************************/
+    @Override
+    public void addObserver(Observer obs) {
+        this.listObservateur.add(obs);
+    }
+    
+    @Override
+    public void notifyObservers() {
+        for(Observer obs : this.listObservateur )
+            obs.update(this, board);
+    }
+    
+    
     /**************************************************************************
      *                      Public System functions                                  *
      * updateBoard will update for each move the board
@@ -218,8 +240,13 @@ public class Game {
         }
         switchPlayer();
         updatePlaceable();
+        notifyObservers();
         //On testera ici si placeable.isEmpty puis on getWinner et fin du game
         return res;
+    }
+    
+    public int getColor(int i, int j){
+        return board[i][j];
     }
     /**
      * Display functions with an highlight of a specified list of location
