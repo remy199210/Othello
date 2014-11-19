@@ -57,7 +57,7 @@ public class Game {
         //Players initialization (Temporar init)
         player1 = new Player("Bernard", black);
         currentPlayer = player1;
-        player2 = new IA("Bot Ur Ass", white);
+        player2 = new IA("Bot Ur Ass", white, 0);
     }
     /**************************************************************************
      *                      Game Tools                                        *
