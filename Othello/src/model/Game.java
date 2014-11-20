@@ -149,14 +149,18 @@ public class Game extends Observable {
      * @param res save rotate locations
      */
     private boolean rotateAxis(int color, int i, int j, int iAxis, int jAxis, Set<Location> res){
-        board[i][j]=color;
-        res.add(new Location(i, j));
         int iNext = i+iAxis,jNext = j+jAxis;
         if(iNext>=0&&jNext>=0&&iNext<gameSize&&jNext<gameSize){
-            if(board[iNext][jNext]==color)
+            if(board[iNext][jNext]==color){
+                board[i][j]=color;
+                res.add(new Location(i, j));
                 return true;
-            if(board[iNext][jNext]==-color)
+            }
+            if(board[iNext][jNext]==-color){
+                board[i][j]=color;
+                res.add(new Location(i, j));
                 return rotateAxis(color, iNext, jNext, iAxis, jAxis, res);
+            }
         }
         return false;
     }
@@ -292,17 +296,18 @@ public class Game extends Observable {
             System.out.println("Player : "+game.currentPlayer.getName());
             System.out.println(RED+"Placeable locations"+RESET);
             System.out.println(game.toString(game.placeable));
-            /*do{
+            do{
                 System.out.print("Row : ");
                 if(sc.hasNextInt())
                     i=sc.nextInt();
                 System.out.print("Column : ");
                 if (sc.hasNextInt())
                     j=sc.nextInt();
-            }while(!game.isPlaceable(i, j));*/
+            }while(!game.isPlaceable(i, j));
             System.out.println(RED+"Move Result"+RESET);
-            randomIA=game.placeable.iterator().next();
-            System.out.println(game.toString(game.updateBoard(randomIA.getRow(), randomIA.getCol())));
+            System.out.println(game.toString(game.updateBoard(i, j)));
+            //randomIA=game.placeable.iterator().next();
+            //System.out.println(game.toString(game.updateBoard(randomIA.getRow(), randomIA.getCol())));
         }
         Player winner = game.getWinner();
         if(winner!=null)
