@@ -35,7 +35,7 @@ public class Othello {
             public void run() {
                 //Game & View created and initialised
                 Game        game        = new Game();
-                View        view        = new View();
+                View        view        = new View(game);
                 view.setVisible(true);
                 Controller controller = new Controller(game,view);
             }

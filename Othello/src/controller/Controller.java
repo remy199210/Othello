@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import model.Game;
+import view.Case;
 import view.View;
 
 /**
@@ -23,11 +24,17 @@ public class Controller extends MouseAdapter implements MouseListener {
     public Controller(Game m_game, View m_view) {
         this.m_game = m_game;
         this.m_view = m_view;
+        m_game.addObserver(m_view);
+        m_view.addController(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+       Case c = (Case) e.getSource();
+       if(c.isPlaceable()){
+           m_game.updateBoard(c.getRow(), c.getCol());
+       }
+            
     }
 
     @Override
@@ -40,10 +47,16 @@ public class Controller extends MouseAdapter implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        if(((Case)e.getSource()).isPlaceable()){
+           ((Case)e.getSource()).placeableHover();
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        Case c = (Case) e.getSource();
+        if(c.isPlaceable())
+            c.setPlaceable(true);
     }
     
     
