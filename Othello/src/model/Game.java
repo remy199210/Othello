@@ -157,9 +157,11 @@ public class Game extends Observable {
                 return true;
             }
             if(board[iNext][jNext]==-color){
-                board[i][j]=color;
-                res.add(new Location(i, j));
-                return rotateAxis(color, iNext, jNext, iAxis, jAxis, res);
+                if(rotateAxis(color, iNext, jNext, iAxis, jAxis, res)){
+                    board[i][j]=color;
+                    res.add(new Location(i, j));
+                    return true;
+                }
             }
         }
         return false;
@@ -251,6 +253,9 @@ public class Game extends Observable {
     
     public int getColor(int i, int j){
         return board[i][j];
+    }
+    public int getCurrentColor(){
+        return currentPlayer.getColor();
     }
     /**
      * Display functions with an highlight of a specified list of location

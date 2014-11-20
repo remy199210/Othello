@@ -7,13 +7,19 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import model.Game;
 
 /**
  *
  * @author Jo
  */
 public class Case extends JPanel{
+    private static final Border greyBorder = BorderFactory.createLineBorder(Color.DARK_GRAY,1);
+    private static final Border redBorder = BorderFactory.createBevelBorder(1,Color.RED,Color.RED);
     private int row,col;
     private boolean placeable;
     
@@ -46,22 +52,28 @@ public class Case extends JPanel{
 
     public void setPlaceable(boolean b) {
         if(b){
-          this.setBackground(Color.RED);
+          this.setBackground(Color.lightGray);
+          setBorder(redBorder);
           placeable = true;
         }
         else{
-             this.setBackground(Color.lightGray);
-             placeable = false;
+            setBorder(greyBorder);
+            this.setBackground(Color.lightGray);
+            placeable = false;
         }
           
     }
     
-    public void placeableHover() {
-        this.setBackground(Color.GREEN);
+    public void placeableHover(int color) {
+        if(color==Game.black)
+            this.setBlack();
+        else this.setWhite();
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     void setEmpty() {
         this.setBackground(Color.lightGray);
+        setBorder(greyBorder);
         placeable = false;
     }
     

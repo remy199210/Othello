@@ -24,7 +24,7 @@ public class Controller extends MouseAdapter implements MouseListener {
     public Controller(Game m_game, View m_view) {
         this.m_game = m_game;
         this.m_view = m_view;
-        m_game.addObserver(m_view);
+        m_game.addObserver(this.m_view);
         m_view.addController(this);
     }
 
@@ -48,7 +48,7 @@ public class Controller extends MouseAdapter implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if(((Case)e.getSource()).isPlaceable()){
-           ((Case)e.getSource()).placeableHover();
+           ((Case)e.getSource()).placeableHover(m_game.getCurrentColor());
         }
     }
 
