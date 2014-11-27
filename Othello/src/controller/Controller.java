@@ -16,7 +16,7 @@ import view.View;
  *
  * @author Rémy
  */
-public class Controller extends MouseAdapter implements MouseListener {
+public class Controller {
     private Game     m_game;
     private View     m_view;
     private boolean play = false;
@@ -25,39 +25,32 @@ public class Controller extends MouseAdapter implements MouseListener {
         this.m_game = m_game;
         this.m_view = m_view;
         m_game.addObserver(this.m_view);
-        m_view.addController(this);
+        initListeners();
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-       Case c = (Case) e.getSource();
-       if(c.isPlaceable()){
-           m_game.updateBoard(c.getRow(), c.getCol());
-       }
-            
+    private void initListeners(){
+        m_view.addLocalMouseListener(new LocalMouseListener());
     }
+    public class LocalMouseListener extends MouseAdapter{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           Case c = (Case) e.getSource();
+           if(c.isPlaceable() && m_game.isRunning()){
+               m_game.updateBoard(c.getRow(), c.getCol());
+           }
+        }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if(((Case)e.getSource()).isPlaceable()){
+               ((Case)e.getSource()).placeableHover(m_game.getCurrentColor());
+            }
+        }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        if(((Case)e.getSource()).isPlaceable()){
-           ((Case)e.getSource()).placeableHover(m_game.getCurrentColor());
+        @Override
+        public void mouseExited(MouseEvent e) {
+            Case c = (Case) e.getSource();
+            if(c.isPlaceable())
+                c.setPlaceable(true);
         }
     }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        Case c = (Case) e.getSource();
-        if(c.isPlaceable())
-            c.setPlaceable(true);
-    }
-    
-    
 }

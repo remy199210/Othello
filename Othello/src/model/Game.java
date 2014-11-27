@@ -6,12 +6,12 @@
 
 package model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game extends Observable {
     //colors
@@ -24,12 +24,13 @@ public class Game extends Observable {
     public static final int gameSize = 8;
     
     //Attributes
-    private Player player1;
-    private Player player2;
-    private Player currentPlayer;
-    private int [][] board;
-    private Set<Location> placeable;
-    private ArrayList<Observer> listObservateur = new ArrayList<Observer>();
+    protected Player player1;
+    protected Player player2;
+    protected Player currentPlayer;
+    protected int [][] board;
+    protected Set<Location> placeable;
+    protected boolean running = true;
+    protected Location humanMove;
 
     /******************
      * Initialisation *
@@ -61,14 +62,33 @@ public class Game extends Observable {
         //Players initialization (Temporar init)
         player1 = new Player("Bernard", black);
         currentPlayer = player1;
-        player2 = new IA("Bot Ur Ass", white, 0);
+        player2 = new IA("Bot Ur Ass", white, 1);
     }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public Game(Game g) {
+        board = new int[gameSize][gameSize];
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                board[i][j]=g.board[i][j];
+            }
+        }
+        currentPlayer = g.currentPlayer;
+        player1=g.player1;
+        player2=g.player2;
+        placeable = new HashSet<>();
+        updatePlaceable();
+    }
+    
     /**************************************************************************
      *                      Game Tools                                        *
      * switchPlayer will change the current player
      *************************************************************************/
     private void switchPlayer(){
-        if(currentPlayer.getColor()==player1.getColor())
+        if(currentPlayer.color==player1.color)
             currentPlayer=player2;
         else currentPlayer=player1;
     }
@@ -79,14 +99,16 @@ public class Game extends Observable {
         int p1 = 0, p2 = 0;
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
-                if(board[i][j]==player1.getColor()) p1++;
-                if(board[i][j]==player2.getColor()) p2++;
+                if(board[i][j]==player1.color) p1++;
+                if(board[i][j]==player2.color) p2++;
             }
         }
         if(p1>p2) return player1;
         if(p1<p2) return player2;
         return null;
     }
+    
+
     /**************************************************************************
      *                      System tools                                      *
      * - hasNeighbors return a boolean
@@ -106,19 +128,6 @@ public class Game extends Observable {
             }
         }
         return false;
-    }
-    private Set<Location> getNeighbors(int color,int i, int  j){
-        Set<Location> res = new HashSet<>();
-        int iMax=i<gameSize-1?i+1:i;
-        int jMax=j<gameSize-1?j+1:j;
-        for(int iMin=i>0?i-1:i;iMin<=iMax;iMin++){
-            for(int jMin=j>0?j-1:j;jMin<=jMax;jMin++){
-                if((iMin!=i || jMin!=j)&&board[iMin][jMin]==color){
-                    res.add(new Location(iMin, jMin));
-                }
-            }
-        }
-        return res;
     }
     /**
      * playableAxis determine if, on a specified axis, pieces will rotate
@@ -170,22 +179,27 @@ public class Game extends Observable {
      * updatePlaceable will update the placeable list after each update
      */
     private void updatePlaceable(){
-        int color = currentPlayer.getColor();
+        int color = currentPlayer.color;
         Set<Location> neighbors;//Contrary color neighbors
         placeable.clear();
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
                 if(board[i][j]==empty){
-                    neighbors = getNeighbors(-color, i, j);
+                    neighbors = new Location(i, j).getNeighbors(board, -color);
                     if (!neighbors.isEmpty()) {
                         for(Location neighbor:neighbors){
-                            if(playableAxis(color, neighbor.getRow(), neighbor.getCol(),
-                                            neighbor.getRow()-i, neighbor.getCol()-j))
+                            if(playableAxis(color, neighbor.row, neighbor.col,
+                                            neighbor.row-i, neighbor.col-j))
                                 placeable.add(new Location(i, j));
                         }
                     }
                 }
             }
+        }
+        if(placeable.isEmpty()){
+            running=false;
+            setChanged();
+            notifyObservers("end");
         }
     }
     /**
@@ -206,22 +220,12 @@ public class Game extends Observable {
         return placeable.contains(new Location(i, j));
     }
      /**************************************************************************
-     *                      Observer design Patern                                       *
-     * 
-     * 
-     * @param obs
+     *                      Observer design Patern
      *************************************************************************/
     @Override
     public void addObserver(Observer obs) {
-        this.listObservateur.add(obs);
-    }
-    
-    @Override
-    public void notifyObservers() {
-        for(Observer obs : this.listObservateur )
-            obs.update(this, board);
-    }
-    
+        super.addObserver(obs);
+    }    
     
     /**************************************************************************
      *                      Public System functions                                  *
@@ -230,32 +234,51 @@ public class Game extends Observable {
      * @param j column of the new move
      * @return Set<Location> modified locations list
      *************************************************************************/
-    public Set<Location> updateBoard(int i,int j){
-        if(!isPlaceable(i, j))
-            throw new GameException("updateBoard : unplaceable location");
-        Set<Location> res = new HashSet<>();
-        int color = currentPlayer.getColor();
-        board[i][j]=color;
-        res.add(new Location(i, j));
-        Set<Location> neighbors = getNeighbors(-color, i, j);
-        if (!neighbors.isEmpty()) {
-            for(Location neighbor:neighbors){
-                rotateAxis(color, neighbor.getRow(), neighbor.getCol(),
-                           neighbor.getRow()-i, neighbor.getCol()-j,res);
+    public synchronized Set<Location> updateBoard(int i,int j){
+        System.out.println(currentPlayer.name);
+        if(running){
+            if(!isPlaceable(i, j))
+                throw new GameException("updateBoard : unplaceable location");
+            Set<Location> res = new HashSet<>();
+            int color = currentPlayer.color;
+            board[i][j]=color;
+            res.add(new Location(i, j));
+            Set<Location> neighbors = new Location(i, j).getNeighbors(board, -color);
+            if (!neighbors.isEmpty()) {
+                for(Location neighbor:neighbors){
+                    rotateAxis(color, neighbor.row, neighbor.col,
+                               neighbor.row-i, neighbor.col-j,res);
+                }
             }
+            switchPlayer();
+            updatePlaceable();
+            if(currentPlayer instanceof IA){
+                setChanged();
+                synchronized(this){
+                    notifyObservers("IA");
+                    /*try {
+                        Thread.currentThread().sleep(3000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    notify();*/
+                    Location l = currentPlayer.getMove(this);
+                    updateBoard(l.row, l.col);
+                }
+            } else {
+                setChanged();
+                notifyObservers("human");
+            }
+            return res;
         }
-        switchPlayer();
-        updatePlaceable();
-        notifyObservers();
-        //On testera ici si placeable.isEmpty puis on getWinner et fin du game
-        return res;
+        return new HashSet<>();
     }
     
-    public int getColor(int i, int j){
+    public synchronized int getColor(int i, int j){
         return board[i][j];
     }
     public int getCurrentColor(){
-        return currentPlayer.getColor();
+        return currentPlayer.color;
     }
     /**
      * Display functions with an highlight of a specified list of location
@@ -293,31 +316,21 @@ public class Game extends Observable {
     }
     
     public static void main(String[] args) {
-        Location randomIA = new Location();
+        Location currentLocation = new Location();
         Game game = new Game();
-        Scanner sc = new Scanner(System.in);
         int i=0,j=0;
         while(!game.placeable.isEmpty()){
-            System.out.println("Player : "+game.currentPlayer.getName());
+            
+            System.out.println("Player : "+game.currentPlayer.name);
             System.out.println(RED+"Placeable locations"+RESET);
             System.out.println(game.toString(game.placeable));
-            do{
-                System.out.print("Row : ");
-                if(sc.hasNextInt())
-                    i=sc.nextInt();
-                System.out.print("Column : ");
-                if (sc.hasNextInt())
-                    j=sc.nextInt();
-            }while(!game.isPlaceable(i, j));
             System.out.println(RED+"Move Result"+RESET);
-            System.out.println(game.toString(game.updateBoard(i, j)));
-            //randomIA=game.placeable.iterator().next();
-            //System.out.println(game.toString(game.updateBoard(randomIA.getRow(), randomIA.getCol())));
+            currentLocation = game.currentPlayer.getMove(game);
+            System.out.println(game.toString(game.updateBoard(currentLocation.row, currentLocation.col)));
         }
         Player winner = game.getWinner();
         if(winner!=null)
-            System.out.println("The winner is "+winner.getName()+"!!");
+            System.out.println("The winner is "+winner.name+"!!");
         else System.out.println("Null Game : There's no winner ...");
     }
-    
 }

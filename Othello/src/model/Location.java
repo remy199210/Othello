@@ -1,12 +1,16 @@
 package model;
 
+import java.util.HashSet;
+import java.util.Set;
+import static model.Game.gameSize;
+
 public class Location{
-    private int row;
-    private int col;
+    protected int row;
+    protected int col;
 
     public Location() {
-        this.row = 0;
-        this.col = 0;
+        this.row = -1;
+        this.col = -1;
     }
 
     public Location(int row, int col) {
@@ -15,15 +19,19 @@ public class Location{
         this.row = row;
         this.col = col;
     }
-
-    public int getRow() {
-        return row;
+    public Set<Location> getNeighbors(int[][] board, int color){
+        Set<Location> res = new HashSet<>();
+        int iMax=row<gameSize-1?row+1:row;
+        int jMax=col<gameSize-1?col+1:col;
+        for(int iMin=row>0?row-1:row;iMin<=iMax;iMin++){
+            for(int jMin=col>0?col-1:col;jMin<=jMax;jMin++){
+                if((iMin!=row || jMin!=col)&&board[iMin][jMin]==color){
+                    res.add(new Location(iMin, jMin));
+                }
+            }
+        }
+        return res;
     }
-
-    public int getCol() {
-        return col;
-    }
-    
     @Override
     public boolean equals(Object o){
         Location l = (Location) o;

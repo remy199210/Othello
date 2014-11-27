@@ -8,13 +8,17 @@ package view;
 
 import controller.Controller;
 import java.awt.Color;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import model.Game;
 import static model.Game.black;
-import static model.Game.empty;
 import static model.Game.gameSize;
 import static model.Game.white;
 
@@ -74,10 +78,10 @@ public class View extends javax.swing.JFrame implements Observer {
      * To add a controller for this view
      * @param controller 
      */
-     public void addController(Controller controller) {
+     public void addLocalMouseListener(MouseListener list) {
         for(int i = 0; i<gameSize;i++){
             for(int j = 0; j< gameSize; j++){
-                board[i][j].addMouseListener(controller);
+                board[i][j].addMouseListener(list);
             }
         }
     
@@ -90,19 +94,37 @@ public class View extends javax.swing.JFrame implements Observer {
          */
     @Override
     public void update(Observable o, Object arg) {
-        for (int i = 0; i < gameSize; i++) {
-            for (int j = 0; j < gameSize; j++) {
-                board[i][j].setEmpty();
-                if(gameModel.isPlaceable(i, j))
-                    board[i][j].setPlaceable(true);
-                else if(gameModel.getColor(i, j)==black)
-                    board[i][j].setBlack();
-                else if(gameModel.getColor(i, j)==white)
-                    board[i][j].setWhite();
-            }
+        Game g = (Game)o;
+        System.out.println(arg.getClass().getSimpleName());
+        if(arg.getClass().getSimpleName().equals("String")){
+            String s = (String)arg;
+            if("end".equals(s)){
+                System.out.println("Notify end");
+                JOptionPane.showMessageDialog(this, g.getWinner().getName()+" is the Winner !! Tuhtuhhh", "Winner", JOptionPane.OK_OPTION, null);
+            }else
+                synchronized(Thread.currentThread()){
+                    /*if("IA".equals(s))
+                        try {
+                            wait();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+                        }*/
+                    for (int i = 0; i < gameSize; i++) {
+                        for (int j = 0; j < gameSize; j++) {
+                            board[i][j].setEmpty();
+                            if(gameModel.isPlaceable(i, j)){
+                                board[i][j].setPlaceable(true);
+                            }
+                            else if(gameModel.getColor(i, j)==black)
+                                board[i][j].setBlack();
+                            else if(gameModel.getColor(i, j)==white)
+                                board[i][j].setWhite();
+                        }
+                    }
+                }
         }
     }
-   
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
