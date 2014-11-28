@@ -11,10 +11,7 @@ import java.awt.Color;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import model.Game;
@@ -48,7 +45,7 @@ public class View extends javax.swing.JFrame implements Observer {
      * init initialize the components not created by the form editor : othello grid
      */
     private void init(){
- 
+        setTitle("Your turn");
         Border myborder = BorderFactory.createLineBorder(Color.DARK_GRAY,1);
         
         for(int i = 0; i<gameSize;i++){
@@ -84,7 +81,6 @@ public class View extends javax.swing.JFrame implements Observer {
                 board[i][j].addMouseListener(list);
             }
         }
-    
      }
         /**
          * Implementation of Observer disgn pattern
@@ -95,31 +91,22 @@ public class View extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Game g = (Game)o;
-        System.out.println(arg.getClass().getSimpleName());
         if(arg.getClass().getSimpleName().equals("String")){
             String s = (String)arg;
+            setTitle(s);
             if("end".equals(s)){
-                System.out.println("Notify end");
-                JOptionPane.showMessageDialog(this, g.getWinner().getName()+" is the Winner !! Tuhtuhhh", "Winner", JOptionPane.OK_OPTION, null);
+                JOptionPane.showMessageDialog(this, g.getWinner()!=null?g.getWinner().getName()+" is the Winner !! Tuhtuhhh":"There\'s no winner, try again...","Winner", JOptionPane.OK_OPTION, null);
             }else
-                synchronized(Thread.currentThread()){
-                    /*if("IA".equals(s))
-                        try {
-                            wait();
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
-                        }*/
-                    for (int i = 0; i < gameSize; i++) {
-                        for (int j = 0; j < gameSize; j++) {
-                            board[i][j].setEmpty();
-                            if(gameModel.isPlaceable(i, j)){
-                                board[i][j].setPlaceable(true);
-                            }
-                            else if(gameModel.getColor(i, j)==black)
-                                board[i][j].setBlack();
-                            else if(gameModel.getColor(i, j)==white)
-                                board[i][j].setWhite();
+                for (int i = 0; i < gameSize; i++) {
+                    for (int j = 0; j < gameSize; j++) {
+                        board[i][j].setEmpty();
+                        if(gameModel.isPlaceable(i, j)){
+                            board[i][j].setPlaceable(true);
                         }
+                        else if(gameModel.getColor(i, j)==black)
+                            board[i][j].setBlack();
+                        else if(gameModel.getColor(i, j)==white)
+                            board[i][j].setWhite();
                     }
                 }
         }

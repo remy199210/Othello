@@ -7,7 +7,6 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import model.Game;
 import view.Case;
 import view.View;
@@ -26,6 +25,8 @@ public class Controller {
         this.m_view = m_view;
         m_game.addObserver(this.m_view);
         initListeners();
+        if(m_game.isIAPlaying())
+            m_game.runThread();
     }
     private void initListeners(){
         m_view.addLocalMouseListener(new LocalMouseListener());
@@ -34,7 +35,7 @@ public class Controller {
         @Override
         public void mouseClicked(MouseEvent e) {
            Case c = (Case) e.getSource();
-           if(c.isPlaceable() && m_game.isRunning()){
+           if(c.isPlaceable() && m_game.isRunningGame() && !m_game.isRunningIA()){
                m_game.updateBoard(c.getRow(), c.getCol());
            }
         }

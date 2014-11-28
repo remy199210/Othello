@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Game extends Observable {
+public class Game extends Observable implements Runnable {
     //colors
     public static final String RED = "\u001B[31m";
     public static final String RESET = "\u001B[0m";
@@ -22,6 +22,7 @@ public class Game extends Observable {
     public static final int empty  =0;
     public static final int white =1;
     public static final int gameSize = 8;
+    private  static final int IATEMPO = 500;
     
     //Attributes
     protected Player player1;
@@ -29,13 +30,16 @@ public class Game extends Observable {
     protected Player currentPlayer;
     protected int [][] board;
     protected Set<Location> placeable;
-    protected boolean running = true;
-    protected Location humanMove;
+    protected boolean runningIA;
+    protected boolean runningGame;
+    protected boolean copy;
+    protected Thread gameThread;
 
     /******************
      * Initialisation *
      ******************/
     public Game() {
+        copy=false;
         board = new int [gameSize][gameSize];
         // In the all code "i" will represent row et "j" column
         for (int i = 0; i < gameSize; i++) {
@@ -60,16 +64,22 @@ public class Game extends Observable {
         placeable.add(new Location(5, 4));
         
         //Players initialization (Temporar init)
-        player1 = new Player("Bernard", black);
+        //player1 = new Player("Bernard", black);
+        player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
         player2 = new IA("Bot Ur Ass", white, 1);
+        runningGame=true;
     }
-
-    public boolean isRunning() {
-        return running;
+    
+    public boolean isRunningIA() {
+        return runningIA;
+    }
+    public boolean isRunningGame() {
+        return runningGame;
     }
 
     public Game(Game g) {
+        copy=true;
         board = new int[gameSize][gameSize];
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
@@ -81,8 +91,16 @@ public class Game extends Observable {
         player2=g.player2;
         placeable = new HashSet<>();
         updatePlaceable();
+        runningGame=true;
     }
     
+     /**************************************************************************
+     *                      Observer design Patern
+     *************************************************************************/
+    @Override
+    public void addObserver(Observer obs) {
+        super.addObserver(obs);
+    }   
     /**************************************************************************
      *                      Game Tools                                        *
      * switchPlayer will change the current player
@@ -107,7 +125,15 @@ public class Game extends Observable {
         if(p1<p2) return player2;
         return null;
     }
+
+    public boolean isIAPlaying() {
+        return (currentPlayer instanceof  IA);
+    }
     
+    public void runThread(){
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
 
     /**************************************************************************
      *                      System tools                                      *
@@ -197,9 +223,10 @@ public class Game extends Observable {
             }
         }
         if(placeable.isEmpty()){
-            running=false;
+            runningGame=false;
             setChanged();
             notifyObservers("end");
+            Thread.currentThread().interrupt();
         }
     }
     /**
@@ -218,14 +245,7 @@ public class Game extends Observable {
      */
     public boolean isPlaceable(int i, int j) {
         return placeable.contains(new Location(i, j));
-    }
-     /**************************************************************************
-     *                      Observer design Patern
-     *************************************************************************/
-    @Override
-    public void addObserver(Observer obs) {
-        super.addObserver(obs);
-    }    
+    } 
     
     /**************************************************************************
      *                      Public System functions                                  *
@@ -234,9 +254,9 @@ public class Game extends Observable {
      * @param j column of the new move
      * @return Set<Location> modified locations list
      *************************************************************************/
-    public synchronized Set<Location> updateBoard(int i,int j){
-        System.out.println(currentPlayer.name);
-        if(running){
+    public Set<Location> updateBoard(int i,int j){
+        if(runningGame){
+            System.out.println("Game Running");
             if(!isPlaceable(i, j))
                 throw new GameException("updateBoard : unplaceable location");
             Set<Location> res = new HashSet<>();
@@ -252,29 +272,22 @@ public class Game extends Observable {
             }
             switchPlayer();
             updatePlaceable();
-            if(currentPlayer instanceof IA){
-                setChanged();
-                synchronized(this){
+            if(!copy){
+                if(currentPlayer instanceof IA){
+                    setChanged();
                     notifyObservers("IA");
-                    /*try {
-                        Thread.currentThread().sleep(3000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    notify();*/
-                    Location l = currentPlayer.getMove(this);
-                    updateBoard(l.row, l.col);
+                    runThread();
+                }else{
+                    setChanged();
+                    notifyObservers("Your turn "+currentPlayer.name);
                 }
-            } else {
-                setChanged();
-                notifyObservers("human");
             }
             return res;
         }
         return new HashSet<>();
     }
     
-    public synchronized int getColor(int i, int j){
+    public int getColor(int i, int j){
         return board[i][j];
     }
     public int getCurrentColor(){
@@ -332,5 +345,29 @@ public class Game extends Observable {
         if(winner!=null)
             System.out.println("The winner is "+winner.name+"!!");
         else System.out.println("Null Game : There's no winner ...");
+    }
+
+    @Override
+    public void run() {
+        if(!runningIA){
+            runningIA=true;
+            synchronized(this){
+                for (int i = 3; i>0; i--) {
+                    setChanged();
+                    notifyObservers(currentPlayer.name+" "+i+"sec");
+                    try {
+                        gameThread.sleep(IATEMPO);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                setChanged();
+                notifyObservers("IA 0 sec");
+                Location l = currentPlayer.getMove(this);
+                updateBoard(l.row, l.col);
+                runningIA=false;
+                gameThread.interrupt();
+            }
+        }
     }
 }
