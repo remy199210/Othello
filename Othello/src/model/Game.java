@@ -256,7 +256,6 @@ public class Game extends Observable implements Runnable {
      *************************************************************************/
     public Set<Location> updateBoard(int i,int j){
         if(runningGame){
-            System.out.println("Game Running");
             if(!isPlaceable(i, j))
                 throw new GameException("updateBoard : unplaceable location");
             Set<Location> res = new HashSet<>();
@@ -358,7 +357,7 @@ public class Game extends Observable implements Runnable {
                     try {
                         gameThread.sleep(IATEMPO);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                        //Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 setChanged();
