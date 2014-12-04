@@ -6,12 +6,15 @@
 
 package model;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Game extends Observable implements Runnable {
     //colors
@@ -22,7 +25,7 @@ public class Game extends Observable implements Runnable {
     public static final int empty  =0;
     public static final int white =1;
     public static final int gameSize = 8;
-    private  static final int IATEMPO = 500;
+    private  static final int IATEMPO = 50;
     
     //Attributes
     protected Player player1;
@@ -31,6 +34,7 @@ public class Game extends Observable implements Runnable {
     protected int nbWhite;
     protected Player currentPlayer;
     protected int [][] board;
+    protected int [][] poids;
     protected Set<Location> placeable;
     protected boolean runningIA;
     protected boolean runningGame;
@@ -43,6 +47,7 @@ public class Game extends Observable implements Runnable {
     public Game() {
         copy=false;
         board = new int [gameSize][gameSize];
+        poids = charge("poids.txt");
         // In the all code "i" will represent row et "j" column
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
@@ -68,10 +73,11 @@ public class Game extends Observable implements Runnable {
         placeable.add(new Location(5, 4));
         
         //Players initialization (Temporar init)
-        //player1 = new Player("Bernard", black);
-        player1 = new IA("Bot what ?", black,1);
+        player1 = new Player("Bernard", black);
+//        player1 = new IA("Bot what ?",black, 2);
+        player2 = new IA("Bot ur fucking ass",white, 3);
+//        player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
-        player2 = new IA("Bot ur ass",white, 2);
         runningGame=true;
     }
     
@@ -81,7 +87,47 @@ public class Game extends Observable implements Runnable {
     public boolean isRunningGame() {
         return runningGame;
     }
-
+    private int[][] charge(String fileName){
+        int[][] res =new int[gameSize][gameSize];
+        int i=0, j=0;
+        try {
+            Scanner sc = new Scanner(new File(fileName));
+            while(sc.hasNext()){
+                if(j>=gameSize){
+                    j=0;
+                    i++;
+                }
+                res[i][j]=Integer.parseInt(sc.next());
+                j++;
+            }
+        } catch (Exception e) {
+        }
+        return res;
+    }
+    public void majPoids(){
+        for(Location l:getWinner().coups){
+            poids[l.row][l.col]++;
+        }
+        for(Location l:getLooser().coups){
+            poids[l.row][l.col]--;
+        }
+    }
+    public void save(String fileName){
+        try{
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter out = new BufferedWriter(fw);
+            for (int i = 0; i < gameSize; i++) {
+                for (int j = 0; j < gameSize; j++) {
+                    out.write(poids[i][j]+(poids[i][j]>-1?"  ":" "));
+                    out.flush();
+                }
+                out.write("\n");
+            }
+            out.close();
+        }catch(IOException ioe){
+                ioe.printStackTrace();
+        }
+    }
     public Game(Game g) {
         copy=true;
         board = new int[gameSize][gameSize];
@@ -130,6 +176,12 @@ public class Game extends Observable implements Runnable {
         if(p1>p2) return player1;
         if(p1<p2) return player2;
         return null;
+    }
+    
+    public Player getLooser(){
+        if(player1.equals(getWinner()))
+            return player2;
+        else return player1;
     }
 
     public boolean isIAPlaying() {
@@ -214,6 +266,8 @@ public class Game extends Observable implements Runnable {
         int color = currentPlayer.color;
         Set<Location> neighbors;//Contrary color neighbors
         placeable.clear();
+        if(!copy)
+            System.out.println("Je clean "+ currentPlayer.name);
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
                 if(board[i][j]==empty){
@@ -221,8 +275,11 @@ public class Game extends Observable implements Runnable {
                     if (!neighbors.isEmpty()) {
                         for(Location neighbor:neighbors){
                             if(playableAxis(color, neighbor.row, neighbor.col,
-                                            neighbor.row-i, neighbor.col-j))
+                                            neighbor.row-i, neighbor.col-j)){
                                 placeable.add(new Location(i, j));
+                                if(!copy)
+                                    System.out.println("+1 placable");
+                            }
                         }
                     }
                 }
@@ -230,9 +287,13 @@ public class Game extends Observable implements Runnable {
         }
         if(placeable.isEmpty()){
             runningGame=false;
-            setChanged();
-            notifyObservers("end");
-            Thread.currentThread().interrupt();
+            if(!copy){
+                setChanged();
+                notifyObservers("end");
+                Thread.currentThread().interrupt();
+                majPoids();
+                save("poids.txt");
+            }
         }
     }
     /**
@@ -279,6 +340,8 @@ public class Game extends Observable implements Runnable {
             switchPlayer();
             updatePlaceable();
             if(!copy){
+                System.out.println("Je joue");
+                currentPlayer.coups.add(new Location(i, j));
                 if(currentPlayer instanceof IA){
                     setChanged();
                     notifyObservers("IA");
@@ -356,22 +419,6 @@ public class Game extends Observable implements Runnable {
     }
     
     public static void main(String[] args) {
-        Location currentLocation = new Location();
-        Game game = new Game();
-        int i=0,j=0;
-        while(!game.placeable.isEmpty()){
-            
-            System.out.println("Player : "+game.currentPlayer.name);
-            System.out.println(RED+"Placeable locations"+RESET);
-            System.out.println(game.toString(game.placeable));
-            System.out.println(RED+"Move Result"+RESET);
-            currentLocation = game.currentPlayer.getMove(game);
-            System.out.println(game.toString(game.updateBoard(currentLocation.row, currentLocation.col)));
-        }
-        Player winner = game.getWinner();
-        if(winner!=null)
-            System.out.println("The winner is "+winner.name+"!!");
-        else System.out.println("Null Game : There's no winner ...");
     }
 
     @Override

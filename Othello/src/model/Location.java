@@ -7,6 +7,9 @@ import static model.Game.gameSize;
 public class Location{
     protected int row;
     protected int col;
+    int weight;
+
+  
 
     public Location() {
         this.row = -1;
@@ -38,9 +41,13 @@ public class Location{
         return row==l.row && col==l.col;
     }
     
-    public void copie(Location l){
+    public void copy(Location l){
         this.row = l.row;
         this.col = l.col;
+    }
+    
+      public void raiseWeight(int weight) {
+        this.weight+=weight;
     }
 
     @Override

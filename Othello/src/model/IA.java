@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Rémy
  */
 class IA extends Player{
-    
+    protected Location result;
     protected int level;
     protected Game futurGame;
     
@@ -71,68 +71,58 @@ class IA extends Player{
         return res;
     }
     
-    private Location myIAminMax(Game game){
-        int tmp, min=64;
-        Set<Location> candidates = new HashSet<>();
-        Location res = new Location();
-        for(Location l:game.placeable){
-            futurGame = new Game(game);
-            futurGame.updateBoard(l.row, l.col).size();
-            tmp = getMaxModifications(futurGame);
-            if(tmp < min){
-                System.out.println("Je remplace");
-                min = tmp;
-                candidates.clear();
-                candidates.add(l);
-            }
-            else if(tmp == min)
-                candidates.add(l);
-        }
-        
-        return getMaxModificationsLocation(game, candidates);
-    }
     
-    private int myIAMinMax2(Game game, Location res, int depth, int depthmax){
-        if(depth < 1){
+    private int myIAMinMax(Game game, int depth, int depthmax){
+//        for (int i = 0; i < depthmax-depth; i++) {
+//                System.out.print(" ");
+//            }
+        if(depth < 1 || !game.isRunningGame()){
             return evaluation(game, color);
         }
-        
         int max = Integer.MIN_VALUE;
+//        System.out.println("Depth "+ depth + " -> " + max);
         for(Location l:game.placeable){
             futurGame = new Game(game);
             futurGame.updateBoard(l.row, l.col);
-            int score = -myIAMinMax2(futurGame ,res ,depth - 1, depthmax);
+            int score = -myIAMinMax(futurGame, depth - 1, depthmax);
             futurGame = game;
-            if(score >= max){
+            if(score > max){
                 max = score;
                 if(depth == depthmax)
-                    res.copie(l);
+                    result = l;
             }
         }
         return max;
     }
     
-        private int alphaBeta(Game game, Location res, int depth, int depthmax, int alpha, int beta){
-        if(depth < 1){
+        private int alphaBeta(Game game, int depth, int depthmax, int alpha, int beta){
+//        for (int i = 0; i < depthmax-depth; i++) {
+//                System.out.print(" ");
+//            }
+        if(depth < 1 || !game.isRunningGame()){
             return evaluation(game, color);
         }
+//        System.out.println("Depth "+ depth + " -> " + alpha + ";"+ beta);
         for(Location l:game.placeable){
             futurGame = new Game(game);
             futurGame.updateBoard(l.row, l.col);
-            int score = -alphaBeta(futurGame ,res ,depth - 1, depthmax, -beta, -alpha);
+            int score = -alphaBeta(futurGame ,depth - 1, depthmax, -beta, -alpha);
             futurGame = game;
-            if(score >= alpha){
+            if(score > alpha){
                 alpha = score;
                 if(depth == depthmax)
-                    res.copie(l);
-                if(alpha >= beta)
+                    result = l;
+                if(alpha >= beta){
+//                    System.out.println("break");
                     break;
+                }
             }
        }
         return alpha;
     }
     
     private int evaluation(Game game, int color){
+//        System.out.println("eval : "+game.getScoreColor(color));
         return game.getScoreColor(color); 
     }
     
@@ -140,17 +130,18 @@ class IA extends Player{
     
     @Override
     public Location getMove(Game game){
-        Location res = new Location();
         switch (level) {
-            case 1:myIAMinMax2(game,res,2,2);
-            return res; 
+            case 1:myIAMinMax(game,2,2);
+            return result; 
                 
-            case 2:alphaBeta(game, res, 4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                    System.out.println(res.row + " " +res.col);
-                    
-                   //myIAMinMax2(game,res,4,4);
-                   //System.out.println(res.row + " " +res.col);
-            return res;
+            case 2:alphaBeta(game, 4, 4, Integer.MIN_VALUE+1, Integer.MAX_VALUE);
+//                    System.out.println(result.row + " " +result.col);
+//                   myIAMinMax(game,2,2);
+            return result;
+            case 3:alphaBeta(game, 6, 6, Integer.MIN_VALUE+1, Integer.MAX_VALUE);
+//                    System.out.println(result.row + " " +result.col);
+//                   myIAMinMax(game,2,2);
+            return result;
                 
             default:
                 throw new AssertionError();
