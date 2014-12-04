@@ -46,6 +46,8 @@ public class View extends javax.swing.JFrame implements Observer {
      */
     private void init(){
         setTitle("Your turn");
+        this.setSize(400, 400);
+        setLocationRelativeTo(null);
         Border myborder = BorderFactory.createLineBorder(Color.DARK_GRAY,1);
         
         for(int i = 0; i<gameSize;i++){

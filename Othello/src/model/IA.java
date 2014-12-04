@@ -7,8 +7,6 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -94,12 +92,66 @@ class IA extends Player{
         return getMaxModificationsLocation(game, candidates);
     }
     
+    private int myIAMinMax2(Game game, Location res, int depth, int depthmax){
+        if(depth < 1){
+            return evaluation(game, color);
+        }
+        
+        int max = Integer.MIN_VALUE;
+        for(Location l:game.placeable){
+            futurGame = new Game(game);
+            futurGame.updateBoard(l.row, l.col);
+            int score = -myIAMinMax2(futurGame ,res ,depth - 1, depthmax);
+            futurGame = game;
+            if(score >= max){
+                max = score;
+                if(depth == depthmax)
+                    res.copie(l);
+            }
+        }
+        return max;
+    }
+    
+        private int alphaBeta(Game game, Location res, int depth, int depthmax, int alpha, int beta){
+        if(depth < 1){
+            return evaluation(game, color);
+        }
+        for(Location l:game.placeable){
+            futurGame = new Game(game);
+            futurGame.updateBoard(l.row, l.col);
+            int score = -alphaBeta(futurGame ,res ,depth - 1, depthmax, -beta, -alpha);
+            futurGame = game;
+            if(score >= alpha){
+                alpha = score;
+                if(depth == depthmax)
+                    res.copie(l);
+                if(alpha >= beta)
+                    break;
+            }
+       }
+        return alpha;
+    }
+    
+    private int evaluation(Game game, int color){
+        return game.getScoreColor(color); 
+    }
+    
     
     
     @Override
     public Location getMove(Game game){
+        Location res = new Location();
         switch (level) {
-            case 1:return myIAminMax(game);
+            case 1:myIAMinMax2(game,res,2,2);
+            return res; 
+                
+            case 2:alphaBeta(game, res, 4, 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                    System.out.println(res.row + " " +res.col);
+                    
+                   //myIAMinMax2(game,res,4,4);
+                   //System.out.println(res.row + " " +res.col);
+            return res;
+                
             default:
                 throw new AssertionError();
         }

@@ -37,6 +37,11 @@ public class Location{
         Location l = (Location) o;
         return row==l.row && col==l.col;
     }
+    
+    public void copie(Location l){
+        this.row = l.row;
+        this.col = l.col;
+    }
 
     @Override
     public int hashCode() {

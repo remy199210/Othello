@@ -27,6 +27,8 @@ public class Game extends Observable implements Runnable {
     //Attributes
     protected Player player1;
     protected Player player2;
+    protected int nbBlack;
+    protected int nbWhite;
     protected Player currentPlayer;
     protected int [][] board;
     protected Set<Location> placeable;
@@ -56,6 +58,8 @@ public class Game extends Observable implements Runnable {
         board[3][4]=black;
         board[4][3]=black;    
         
+        nbWhite = 2;
+        nbBlack = 2;
         //Now we can initialize the placeable tab because among rules Black Player always begins
         placeable = new HashSet<>();
         placeable.add(new Location(3, 2));
@@ -67,7 +71,7 @@ public class Game extends Observable implements Runnable {
         //player1 = new Player("Bernard", black);
         player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
-        player2 = new IA("Bot Ur Ass", white, 1);
+        player2 = new IA("Bot ur ass",white, 2);
         runningGame=true;
     }
     
@@ -89,6 +93,8 @@ public class Game extends Observable implements Runnable {
         currentPlayer = g.currentPlayer;
         player1=g.player1;
         player2=g.player2;
+        nbBlack = g.nbBlack;
+        nbWhite = g.nbWhite;
         placeable = new HashSet<>();
         updatePlaceable();
         runningGame=true;
@@ -269,6 +275,7 @@ public class Game extends Observable implements Runnable {
                                neighbor.row-i, neighbor.col-j,res);
                 }
             }
+            setNbColor(color, res.size()-1);
             switchPlayer();
             updatePlaceable();
             if(!copy){
@@ -285,6 +292,27 @@ public class Game extends Observable implements Runnable {
         }
         return new HashSet<>();
     }
+    
+    private void setNbColor(int color, int score){
+        if(color == black){
+            nbWhite = nbWhite-score;
+            nbBlack+= score+1;
+        }
+        else if(color == white){
+            nbBlack = nbBlack-score;
+            nbWhite+= score+1;
+        }
+    }
+    
+    public int getScoreColor(int color){
+        if(color == black)
+            return nbBlack-nbWhite;
+        else if(color == white)
+            return nbWhite-nbBlack;
+        else
+            throw new GameException("Game color doesn't exist");
+    }
+    
     
     public int getColor(int i, int j){
         return board[i][j];
