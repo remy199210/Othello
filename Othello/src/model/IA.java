@@ -5,7 +5,11 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -95,18 +99,18 @@ class IA extends Player{
         return max;
     }
     
-        private int alphaBeta(Game game, int depth, int depthmax, int alpha, int beta){
+        private int alphaBetaRec(Game game, int eval, int depth, int depthmax, int alpha, int beta){
 //        for (int i = 0; i < depthmax-depth; i++) {
 //                System.out.print(" ");
 //            }
         if(depth < 1 || !game.isRunningGame()){
-            return evaluation(game, color);
+            return evaluation(game, eval);
         }
 //        System.out.println("Depth "+ depth + " -> " + alpha + ";"+ beta);
         for(Location l:game.placeable){
             futurGame = new Game(game);
             futurGame.updateBoard(l.row, l.col);
-            int score = -alphaBeta(futurGame ,depth - 1, depthmax, -beta, -alpha);
+            int score = -alphaBetaRec(futurGame, eval ,depth - 1, depthmax, -beta, -alpha);
             futurGame = game;
             if(score > alpha){
                 alpha = score;
@@ -120,28 +124,84 @@ class IA extends Player{
        }
         return alpha;
     }
+    private Location alphaBeta(Game game, int eval, int depth){
+        alphaBetaRec(game, eval, depth, depth, Integer.MIN_VALUE+1, Integer.MAX_VALUE);
+        return result;
+    }
     
-    private int evaluation(Game game, int color){
-//        System.out.println("eval : "+game.getScoreColor(color));
-        return game.getScoreColor(color); 
+    private int evalstat(Game g){
+        int [][][] tab;
+        if(g.currentPlayer.equals(g.player1)){
+            tab = g.p1Weights;
+        }
+        else{
+            tab = g.p2Weights;
+        }
+        int c = g.currentPlayer.coups.size();
+        int max = Integer.MIN_VALUE;
+        for(Location l:g.placeable){
+            int tmp = tab[c][l.row][l.col];
+            if(tmp > max){
+                max = tmp;
+            }
+        }
+        return max;
+    }
+    
+    private Location statIA(Game g){
+        int [][][] tab;
+        Location res = new Location();
+        if(g.currentPlayer.equals(g.player1)){
+            tab = g.p1Weights;
+        }
+        else{
+            tab = g.p2Weights;
+        }
+        
+        int c = g.currentPlayer.coups.size();
+        int max = Integer.MIN_VALUE;
+        for(Location l:g.placeable){
+            int tmp = tab[c][l.row][l.col];
+            if(tmp > max){
+                max = tmp;
+                res = l;
+            }
+        }
+        return res;
     }
     
     
-    
+        private int evaluation(Game game, int eval){
+    //        System.out.println("eval : "+game.getScoreColor(color));
+            if(!game.isRunningGame())
+                return game.getScoreColor(game.getCurrentColor());
+            switch(eval){
+                case 0:
+                    return game.getScoreColor(game.getCurrentColor());
+                case 1:
+                    return evalstat(game);
+            }
+
+            return 0;
+        }
+        
     @Override
     public Location getMove(Game game){
         switch (level) {
-            case 1:myIAMinMax(game,2,2);
-            return result; 
+            case 0:
+                List<Location> list =new ArrayList(game.placeable);
+                Collections.shuffle(list);
+                return list.get(0);
+            case 1: return alphaBeta(game, 0, 2);
                 
-            case 2:alphaBeta(game, 4, 4, Integer.MIN_VALUE+1, Integer.MAX_VALUE);
-//                    System.out.println(result.row + " " +result.col);
-//                   myIAMinMax(game,2,2);
-            return result;
-            case 3:alphaBeta(game, 6, 6, Integer.MIN_VALUE+1, Integer.MAX_VALUE);
-//                    System.out.println(result.row + " " +result.col);
-//                   myIAMinMax(game,2,2);
-            return result;
+            case 2: return alphaBeta(game, 0, 4);
+                
+            case 3: return alphaBeta(game, 0, 6);
+                
+            case 4: return alphaBeta(game, 1, 2);
+                
+            case 5:return statIA(game);
+            
                 
             default:
                 throw new AssertionError();

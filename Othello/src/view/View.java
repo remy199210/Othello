@@ -93,24 +93,26 @@ public class View extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Game g = (Game)o;
-        if(arg.getClass().getSimpleName().equals("String")){
+        if(arg==null){
+            for (int i = 0; i < gameSize; i++) {
+                for (int j = 0; j < gameSize; j++) {
+                    board[i][j].setEmpty();
+                    if(gameModel.isPlaceable(i, j)){
+                        board[i][j].setPlaceable(true);
+                    }
+                    else if(gameModel.getColor(i, j)==black)
+                        board[i][j].setBlack();
+                    else if(gameModel.getColor(i, j)==white)
+                        board[i][j].setWhite();
+                }
+            }
+        }
+        else if(arg.getClass().getSimpleName().equals("String")){
             String s = (String)arg;
             setTitle(s);
             if("end".equals(s)){
                 JOptionPane.showMessageDialog(this, g.getWinner()!=null?g.getWinner().getName()+" is the Winner !! Tuhtuhhh":"There\'s no winner, try again...","Winner", JOptionPane.OK_OPTION, null);
-            }else
-                for (int i = 0; i < gameSize; i++) {
-                    for (int j = 0; j < gameSize; j++) {
-                        board[i][j].setEmpty();
-                        if(gameModel.isPlaceable(i, j)){
-                            board[i][j].setPlaceable(true);
-                        }
-                        else if(gameModel.getColor(i, j)==black)
-                            board[i][j].setBlack();
-                        else if(gameModel.getColor(i, j)==white)
-                            board[i][j].setWhite();
-                    }
-                }
+            }
         }
     }
     

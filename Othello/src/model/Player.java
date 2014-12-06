@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -18,12 +19,12 @@ public class Player {
     protected String name;
     protected int color;
     
-    protected Set<Location> coups;
+    protected ArrayList<Location> coups;
 
     public Player(String name, int color) {
         this.name = name;
         this.color = color;
-        coups = new HashSet<>();
+        coups = new ArrayList<>();
     }
 
     public Location getMove(Game game) {

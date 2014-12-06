@@ -8,6 +8,7 @@ package model;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ public class Game extends Observable implements Runnable {
     public static final int empty  =0;
     public static final int white =1;
     public static final int gameSize = 8;
-    private  static final int IATEMPO = 50;
+    private  static final int IATEMPO = 500;
     
     //Attributes
     protected Player player1;
@@ -34,7 +35,8 @@ public class Game extends Observable implements Runnable {
     protected int nbWhite;
     protected Player currentPlayer;
     protected int [][] board;
-    protected int [][] poids;
+    protected int[] [][] p1Weights;
+    protected int[] [][] p2Weights;
     protected Set<Location> placeable;
     protected boolean runningIA;
     protected boolean runningGame;
@@ -47,13 +49,19 @@ public class Game extends Observable implements Runnable {
     public Game() {
         copy=false;
         board = new int [gameSize][gameSize];
-        poids = charge("poids.txt");
+//        p1Weights=new int [30][gameSize][gameSize];
+//        p2Weights=new int [30][gameSize][gameSize];
         // In the all code "i" will represent row et "j" column
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
                 board[i][j]=empty;
+//                for (int k = 0; k < 30; k++) {
+//                    p1Weights[k][i][j]=empty;
+//                    p2Weights[k][i][j]=empty;
+//                }
             }
         }
+        charge();
         /*
         * At the begining of the game there's always 2 black pieces on location
         * e4 & d5 and 2 white pieces on e5 & d4 (row=number, column=lettres)
@@ -73,61 +81,14 @@ public class Game extends Observable implements Runnable {
         placeable.add(new Location(5, 4));
         
         //Players initialization (Temporar init)
-        player1 = new Player("Bernard", black);
-//        player1 = new IA("Bot what ?",black, 2);
-        player2 = new IA("Bot ur fucking ass",white, 3);
+//        player1 = new Player("Bernard", black);
+        player1 = new IA("Bot 1",black, 0);
+        player2 = new IA("Bot 2",white, 5);
 //        player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
         runningGame=true;
     }
     
-    public boolean isRunningIA() {
-        return runningIA;
-    }
-    public boolean isRunningGame() {
-        return runningGame;
-    }
-    private int[][] charge(String fileName){
-        int[][] res =new int[gameSize][gameSize];
-        int i=0, j=0;
-        try {
-            Scanner sc = new Scanner(new File(fileName));
-            while(sc.hasNext()){
-                if(j>=gameSize){
-                    j=0;
-                    i++;
-                }
-                res[i][j]=Integer.parseInt(sc.next());
-                j++;
-            }
-        } catch (Exception e) {
-        }
-        return res;
-    }
-    public void majPoids(){
-        for(Location l:getWinner().coups){
-            poids[l.row][l.col]++;
-        }
-        for(Location l:getLooser().coups){
-            poids[l.row][l.col]--;
-        }
-    }
-    public void save(String fileName){
-        try{
-            FileWriter fw = new FileWriter(fileName);
-            BufferedWriter out = new BufferedWriter(fw);
-            for (int i = 0; i < gameSize; i++) {
-                for (int j = 0; j < gameSize; j++) {
-                    out.write(poids[i][j]+(poids[i][j]>-1?"  ":" "));
-                    out.flush();
-                }
-                out.write("\n");
-            }
-            out.close();
-        }catch(IOException ioe){
-                ioe.printStackTrace();
-        }
-    }
     public Game(Game g) {
         copy=true;
         board = new int[gameSize][gameSize];
@@ -141,9 +102,94 @@ public class Game extends Observable implements Runnable {
         player2=g.player2;
         nbBlack = g.nbBlack;
         nbWhite = g.nbWhite;
+        p1Weights = g.p1Weights;
+        p2Weights = g.p2Weights;
         placeable = new HashSet<>();
         updatePlaceable();
         runningGame=true;
+    }
+    
+    public boolean isRunningIA() {
+        return runningIA;
+    }
+    public boolean isRunningGame() {
+        return runningGame;
+    }
+    private void charge(){
+        p1Weights =new int[30][gameSize][gameSize];
+        p2Weights =new int[30][gameSize][gameSize];
+        int i=0, j=0;
+        for(int m=0;m<30;m++){
+            try {
+                FileReader f1 = new FileReader("src\\data\\moveStat\\p1m"+m+".txt");
+                FileReader f2 = new FileReader("src\\data\\moveStat\\p2m"+m+".txt");
+                Scanner sc1 = new Scanner(f1);
+                Scanner sc2 = new Scanner(f2);
+                while(sc1.hasNext() && sc2.hasNext()){
+                    if(j>=gameSize){
+                        j=0;
+                        i++;
+                    }
+                    p1Weights[m][i][j]=Integer.parseInt(sc1.next());
+                    p2Weights[m][i][j]=Integer.parseInt(sc2.next());
+                    j++;
+                }
+                sc1.close();
+                sc2.close();
+                f1.close();
+                f2.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            i=0;
+            j=0;
+        }
+    }
+    public void majPoids(){
+        int p1=0, p2=0;
+        if(getWinner()!=null){
+            if(getWinner().equals(player1)){
+                p1=1;
+                p2=-1;
+            }
+            else{
+                p1=-1;
+                p2=1;
+            }
+            for (Location c:player1.coups) {
+                p1Weights[player1.coups.indexOf(c)][c.row][c.col]+=p1;
+            }
+            for (Location c:player2.coups) {
+                p2Weights[player2.coups.indexOf(c)][c.row][c.col]+=p2;
+            }
+        }
+    }
+    public void save(){
+        FileWriter fw1;
+        FileWriter fw2;
+        BufferedWriter out1;
+        BufferedWriter out2;
+        for(int m=0;m<30;m++)
+        try{
+            fw1 = new FileWriter("src\\data\\moveStat\\p1m"+m+".txt");
+            fw2 = new FileWriter("src\\data\\moveStat\\p2m"+m+".txt");
+            out1 = new BufferedWriter(fw1);
+            out2 = new BufferedWriter(fw2);
+            for (int i = 0; i < gameSize; i++) {
+                for (int j = 0; j < gameSize; j++) {
+                    out1.write((p1Weights[m][i][j]>-1?"  ":" ")+p1Weights[m][i][j]);
+                    out2.write((p2Weights[m][i][j]>-1?"  ":" ")+p2Weights[m][i][j]);
+                    out1.flush();
+                    out2.flush();
+                }
+                out1.write("\n");
+                out2.write("\n");
+            }
+            out1.close();
+            out2.close();
+        }catch(IOException ioe){
+                ioe.printStackTrace();
+        }
     }
     
      /**************************************************************************
@@ -266,8 +312,6 @@ public class Game extends Observable implements Runnable {
         int color = currentPlayer.color;
         Set<Location> neighbors;//Contrary color neighbors
         placeable.clear();
-        if(!copy)
-            System.out.println("Je clean "+ currentPlayer.name);
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
                 if(board[i][j]==empty){
@@ -277,8 +321,6 @@ public class Game extends Observable implements Runnable {
                             if(playableAxis(color, neighbor.row, neighbor.col,
                                             neighbor.row-i, neighbor.col-j)){
                                 placeable.add(new Location(i, j));
-                                if(!copy)
-                                    System.out.println("+1 placable");
                             }
                         }
                     }
@@ -291,8 +333,8 @@ public class Game extends Observable implements Runnable {
                 setChanged();
                 notifyObservers("end");
                 Thread.currentThread().interrupt();
-                majPoids();
-                save("poids.txt");
+//                majPoids();
+//                save();
             }
         }
     }
@@ -337,18 +379,27 @@ public class Game extends Observable implements Runnable {
                 }
             }
             setNbColor(color, res.size()-1);
+            if(!copy){
+//                System.out.println((currentPlayer.equals(player1)?"p1 c":"p2 c")+currentPlayer.coups.size());
+//                System.out.println("row :"+i+" col "+j);
+                currentPlayer.coups.add(new Location(i, j));
+            }
             switchPlayer();
             updatePlaceable();
             if(!copy){
-                System.out.println("Je joue");
-                currentPlayer.coups.add(new Location(i, j));
-                if(currentPlayer instanceof IA){
-                    setChanged();
-                    notifyObservers("IA");
-                    runThread();
-                }else{
-                    setChanged();
-                    notifyObservers("Your turn "+currentPlayer.name);
+                setChanged();
+                notifyObservers(null);
+                if(runningGame){
+                    if(currentPlayer instanceof IA){
+                        setChanged();
+                        notifyObservers("IA");
+    //                    runThread();
+                        Location l = currentPlayer.getMove(this);
+                        updateBoard(l.row, l.col);
+                    }else{
+                        setChanged();
+                        notifyObservers("Your turn "+currentPlayer.name);
+                    }
                 }
             }
             return res;
@@ -417,13 +468,10 @@ public class Game extends Observable implements Runnable {
         }
         return res;
     }
-    
-    public static void main(String[] args) {
-    }
 
     @Override
     public void run() {
-        if(!runningIA){
+        if(!runningIA && runningGame){
             runningIA=true;
             synchronized(this){
                 for (int i = 3; i>0; i--) {
@@ -443,5 +491,23 @@ public class Game extends Observable implements Runnable {
                 gameThread.interrupt();
             }
         }
+    }
+        
+    public static void main(String[] args) {
+        Game g;
+        int p1=0,p2=0,n=0;
+        for (int i = 0; i < 100; i++) {
+            System.out.println("Partie " + i);
+            g = new Game();
+            Location l = g.currentPlayer.getMove(g);
+            g.updateBoard(l.row, l.col);
+            if(g.getWinner()==null)
+                n++;
+            else if(g.getWinner().equals(g.player1))
+                p1++;
+            else if(g.getWinner().equals(g.player2))
+                p2++;
+        }
+        System.out.println("P1 : "+p1+"% P2 : "+p2+"% NULL : "+n+"%");
     }
 }
