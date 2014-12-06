@@ -138,12 +138,9 @@ class IA extends Player{
             tab = g.p2Weights;
         }
         int c = g.currentPlayer.coups.size();
-        int max = Integer.MIN_VALUE;
+        int max = 0;
         for(Location l:g.placeable){
-            int tmp = tab[c][l.row][l.col];
-            if(tmp > max){
-                max = tmp;
-            }
+            max+= tab[c][l.row][l.col];
         }
         return max;
     }
@@ -164,9 +161,16 @@ class IA extends Player{
             int tmp = tab[c][l.row][l.col];
             if(tmp > max){
                 max = tmp;
-                res = l;
+                res=l;
             }
         }
+//        List<Location> resultList = new ArrayList<>();
+//        for(Location l:g.placeable){
+//            int tmp = tab[c][l.row][l.col];
+//            if((max - tmp) <= 10)
+//                resultList.add(l);
+//        }
+//        Collections.shuffle(resultList);
         return res;
     }
     
@@ -174,7 +178,7 @@ class IA extends Player{
         private int evaluation(Game game, int eval){
     //        System.out.println("eval : "+game.getScoreColor(color));
             if(!game.isRunningGame())
-                return game.getScoreColor(game.getCurrentColor());
+                return game.getScoreColor(game.getCurrentColor())>0?1000:-1000;
             switch(eval){
                 case 0:
                     return game.getScoreColor(game.getCurrentColor());

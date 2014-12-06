@@ -82,8 +82,8 @@ public class Game extends Observable implements Runnable {
         
         //Players initialization (Temporar init)
 //        player1 = new Player("Bernard", black);
-        player1 = new IA("Bot 1",black, 0);
-        player2 = new IA("Bot 2",white, 5);
+        player1 = new IA("Bot 1",black, 5);
+        player2 = new IA("Bot 2",white, 0);
 //        player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
         runningGame=true;
@@ -497,7 +497,6 @@ public class Game extends Observable implements Runnable {
         Game g;
         int p1=0,p2=0,n=0;
         for (int i = 0; i < 100; i++) {
-            System.out.println("Partie " + i);
             g = new Game();
             Location l = g.currentPlayer.getMove(g);
             g.updateBoard(l.row, l.col);
@@ -507,7 +506,9 @@ public class Game extends Observable implements Runnable {
                 p1++;
             else if(g.getWinner().equals(g.player2))
                 p2++;
+            
+            System.out.println("Partie " + i+" P1 : "+(int)100*p1/i+"% P2 : "+(int)100*p2/i+"% NULL : "+(int)100*n/i+"%");
         }
-        System.out.println("P1 : "+p1+"% P2 : "+p2+"% NULL : "+n+"%");
+        System.out.println();
     }
 }
