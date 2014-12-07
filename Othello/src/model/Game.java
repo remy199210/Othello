@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Timer;
 
 public class Game extends Observable implements Runnable {
     //colors
@@ -35,6 +36,9 @@ public class Game extends Observable implements Runnable {
     protected int nbWhite;
     protected Player currentPlayer;
     protected int [][] board;
+    protected int [][] totalWeight1;
+    protected int [][] totalWeight2;
+    protected int [][] totalWeight;
     protected int[] [][] p1Weights;
     protected int[] [][] p2Weights;
     protected Set<Location> placeable;
@@ -62,6 +66,7 @@ public class Game extends Observable implements Runnable {
             }
         }
         charge();
+        getTotalWeight();
         /*
         * At the begining of the game there's always 2 black pieces on location
         * e4 & d5 and 2 white pieces on e5 & d4 (row=number, column=lettres)
@@ -82,8 +87,8 @@ public class Game extends Observable implements Runnable {
         
         //Players initialization (Temporar init)
 //        player1 = new Player("Bernard", black);
-        player1 = new IA("Bot 1",black, 5);
-        player2 = new IA("Bot 2",white, 0);
+        player1 = new IA("Bot 1",black, 6);
+        player2 = new IA("Bot 2",white, 1);
 //        player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
         runningGame=true;
@@ -102,6 +107,9 @@ public class Game extends Observable implements Runnable {
         player2=g.player2;
         nbBlack = g.nbBlack;
         nbWhite = g.nbWhite;
+        totalWeight1 = g.totalWeight1;
+        totalWeight2 = g.totalWeight2;
+        totalWeight = g.totalWeight;
         p1Weights = g.p1Weights;
         p2Weights = g.p2Weights;
         placeable = new HashSet<>();
@@ -143,6 +151,30 @@ public class Game extends Observable implements Runnable {
             }
             i=0;
             j=0;
+        }
+    }
+    private void getTotalWeight(){
+        totalWeight1= new int[gameSize][gameSize];
+        totalWeight2= new int[gameSize][gameSize];
+        totalWeight= new int[gameSize][gameSize];
+        for (int m = 0; m < 30; m++) {
+            for (int i = 0; i < gameSize; i++) {
+                for (int j = 0; j < gameSize; j++) {
+                    if(m==0){
+                        totalWeight1[i][j]=p1Weights[m][i][j];
+                        totalWeight2[i][j]=p2Weights[m][i][j];
+                    }
+                    else{
+                        totalWeight1[i][j]+=p1Weights[m][i][j];
+                        totalWeight2[i][j]+=p2Weights[m][i][j];
+                    }
+                }
+            }
+        }        
+        for (int i = 0; i < gameSize; i++) {
+            for (int j = 0; j < gameSize; j++) {
+                totalWeight[i][j]=(int)(totalWeight1[i][j]+totalWeight2[i][j])/150;//150 pour un result opti
+            }
         }
     }
     public void majPoids(){
@@ -495,8 +527,19 @@ public class Game extends Observable implements Runnable {
         
     public static void main(String[] args) {
         Game g;
-        int p1=0,p2=0,n=0;
-        for (int i = 0; i < 100; i++) {
+        int nbParties =1;
+        int p1=0,p2=0,n=0,perc=0;
+        long temps = System.currentTimeMillis();
+        for (int i = 0; i < nbParties; i++) {
+            int percTemp =((int)100*(i+1)/nbParties);
+            if(perc<percTemp){
+                perc=percTemp;
+                long tempsTemp = System.currentTimeMillis()-temps;
+                tempsTemp=(long)((tempsTemp*100)/perc)-tempsTemp;
+                long sec = (long) (tempsTemp/1000)%60;
+                long min = (long) (tempsTemp/1000/60)%60;
+                System.out.println(perc+"% de parties traitées-> "+min+"min"+sec+"sec restantes...");
+            }
             g = new Game();
             Location l = g.currentPlayer.getMove(g);
             g.updateBoard(l.row, l.col);
@@ -506,9 +549,7 @@ public class Game extends Observable implements Runnable {
                 p1++;
             else if(g.getWinner().equals(g.player2))
                 p2++;
-            
-            System.out.println("Partie " + i+" P1 : "+(int)100*p1/i+"% P2 : "+(int)100*p2/i+"% NULL : "+(int)100*n/i+"%");
+            System.out.println("P1 : "+(int)100*p1/(i+1)+"% P2 : "+(int)100*p2/(i+1)+"% NULL : "+(int)100*n/(i+1)+"%");
         }
-        System.out.println();
     }
 }

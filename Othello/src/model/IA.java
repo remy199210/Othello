@@ -111,6 +111,9 @@ class IA extends Player{
             futurGame = new Game(game);
             futurGame.updateBoard(l.row, l.col);
             int score = -alphaBetaRec(futurGame, eval ,depth - 1, depthmax, -beta, -alpha);
+            /**TEST**/
+            score+=game.totalWeight[l.row][l.col];
+            /**FIN TEST**/
             futurGame = game;
             if(score > alpha){
                 alpha = score;
@@ -144,7 +147,20 @@ class IA extends Player{
         }
         return max;
     }
-    
+    private Location evalX2(Game g){
+        Location res = new Location();
+        int max = Integer.MIN_VALUE;
+        for (Location l:g.placeable) {
+            Game futur =new Game(g);
+            futur.updateBoard(l.row, l.col);
+            int tmp = g.totalWeight[l.row][l.col]+futur.getScoreColor(color);
+            if(tmp>max){
+                max=tmp;
+                res=l;
+            }
+        }
+        return res;
+    }
     private Location statIA(Game g){
         int [][][] tab;
         Location res = new Location();
@@ -178,10 +194,10 @@ class IA extends Player{
         private int evaluation(Game game, int eval){
     //        System.out.println("eval : "+game.getScoreColor(color));
             if(!game.isRunningGame())
-                return game.getScoreColor(game.getCurrentColor())>0?1000:-1000;
+                return game.getScoreColor(color)>0?1000:-1000;
             switch(eval){
                 case 0:
-                    return game.getScoreColor(game.getCurrentColor());
+                    return game.getScoreColor(color);
                 case 1:
                     return evalstat(game);
             }
@@ -206,6 +222,7 @@ class IA extends Player{
                 
             case 5:return statIA(game);
             
+            case 6: return evalX2(game);
                 
             default:
                 throw new AssertionError();
