@@ -87,7 +87,7 @@ public class Game extends Observable implements Runnable {
         
         //Players initialization (Temporar init)
 //        player1 = new Player("Bernard", black);
-        player1 = new IA("Bot 1",black, 6);
+        player1 = new IA("Bot 1",black, 0);
         player2 = new IA("Bot 2",white, 1);
 //        player1 = new IA("Bot what ?", black,1);
         currentPlayer = player1;
@@ -174,7 +174,9 @@ public class Game extends Observable implements Runnable {
         for (int i = 0; i < gameSize; i++) {
             for (int j = 0; j < gameSize; j++) {
                 totalWeight[i][j]=(int)(totalWeight1[i][j]+totalWeight2[i][j])/150;//150 pour un result opti
+//                System.out.print(totalWeight[i][j]+" ");
             }
+//            System.out.println("");
         }
     }
     public void majPoids(){
@@ -527,8 +529,8 @@ public class Game extends Observable implements Runnable {
         
     public static void main(String[] args) {
         Game g;
-        int nbParties =1;
-        int p1=0,p2=0,n=0,perc=0;
+        int nbParties =1000;
+        int p1=0,p2=0,n=0,perc=0,coup=0;
         long temps = System.currentTimeMillis();
         for (int i = 0; i < nbParties; i++) {
             int percTemp =((int)100*(i+1)/nbParties);
@@ -549,7 +551,8 @@ public class Game extends Observable implements Runnable {
                 p1++;
             else if(g.getWinner().equals(g.player2))
                 p2++;
-            System.out.println("P1 : "+(int)100*p1/(i+1)+"% P2 : "+(int)100*p2/(i+1)+"% NULL : "+(int)100*n/(i+1)+"%");
+            coup+=g.player1.coups.size();
+            System.out.println("Coups : "+(int)coup/(i+1)+" P1 : "+(int)100*p1/(i+1)+"% P2 : "+(int)100*p2/(i+1)+"% NULL : "+(int)100*n/(i+1)+"%");
         }
     }
 }

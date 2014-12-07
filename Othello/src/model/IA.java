@@ -81,7 +81,7 @@ class IA extends Player{
 //                System.out.print(" ");
 //            }
         if(depth < 1 || !game.isRunningGame()){
-            return evaluation(game, color);
+            return evaluation(game, color, depth+1);
         }
         int max = Integer.MIN_VALUE;
 //        System.out.println("Depth "+ depth + " -> " + max);
@@ -104,7 +104,7 @@ class IA extends Player{
 //                System.out.print(" ");
 //            }
         if(depth < 1 || !game.isRunningGame()){
-            return evaluation(game, eval);
+            return evaluation(game, eval, depth+1);
         }
 //        System.out.println("Depth "+ depth + " -> " + alpha + ";"+ beta);
         for(Location l:game.placeable){
@@ -191,10 +191,10 @@ class IA extends Player{
     }
     
     
-        private int evaluation(Game game, int eval){
+        private int evaluation(Game game, int eval, int depth){
     //        System.out.println("eval : "+game.getScoreColor(color));
             if(!game.isRunningGame())
-                return game.getScoreColor(color)>0?1000:-1000;
+                return game.getScoreColor(color)>0?100*depth:-100*depth;
             switch(eval){
                 case 0:
                     return game.getScoreColor(color);
