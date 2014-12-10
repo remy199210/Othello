@@ -76,51 +76,51 @@ class IA extends Player{
     }
     
     
-    private int myIAMinMax(Game game, int depth, int depthmax){
+    private int myIAMinMaxRec(Game game, int eval, int depth, int depthmax){
 //        for (int i = 0; i < depthmax-depth; i++) {
 //                System.out.print(" ");
 //            }
         if(depth < 1 || !game.isRunningGame()){
-            return evaluation(game, color, depth+1);
+            return evaluation(game, eval, depth);
         }
         int max = Integer.MIN_VALUE;
-//        System.out.println("Depth "+ depth + " -> " + max);
         for(Location l:game.placeable){
             futurGame = new Game(game);
             futurGame.updateBoard(l.row, l.col);
-            int score = -myIAMinMax(futurGame, depth - 1, depthmax);
+            int res = -myIAMinMaxRec(futurGame, eval, depth - 1, depthmax);
             futurGame = game;
-            if(score > max){
-                max = score;
+            if(res > max){
+                max = res;
                 if(depth == depthmax)
                     result = l;
             }
         }
         return max;
     }
-    
+        private Location myIAMinMax(Game game, int eval, int depth) {
+            myIAMinMaxRec(game, eval, depth, depth);
+            return result;
+        }
         private int alphaBetaRec(Game game, int eval, int depth, int depthmax, int alpha, int beta){
-//        for (int i = 0; i < depthmax-depth; i++) {
-//                System.out.print(" ");
-//            }
         if(depth < 1 || !game.isRunningGame()){
-            return evaluation(game, eval, depth+1);
+            return evaluation(game, eval, depth);
         }
 //        System.out.println("Depth "+ depth + " -> " + alpha + ";"+ beta);
         for(Location l:game.placeable){
             futurGame = new Game(game);
             futurGame.updateBoard(l.row, l.col);
-            int score = -alphaBetaRec(futurGame, eval ,depth - 1, depthmax, -beta, -alpha);
-            /**TEST**/
-            score+=game.totalWeight[l.row][l.col];
-            /**FIN TEST**/
+            int res = -alphaBetaRec(futurGame, eval ,depth - 1, depthmax, -beta, -alpha);
+            /**Include the weight of the move**/
+            if(depth%2==1)
+                res-=game.totalWeight[l.row][l.col];
+            else res+=game.totalWeight[l.row][l.col];
+            /**end**/
             futurGame = game;
-            if(score > alpha){
-                alpha = score;
+            if(res > alpha){
+                alpha = res;
                 if(depth == depthmax)
                     result = l;
                 if(alpha >= beta){
-//                    System.out.println("break");
                     break;
                 }
             }
@@ -131,29 +131,13 @@ class IA extends Player{
         alphaBetaRec(game, eval, depth, depth, Integer.MIN_VALUE+1, Integer.MAX_VALUE);
         return result;
     }
-    
-    private int evalstat(Game g){
-        int [][][] tab;
-        if(g.currentPlayer.equals(g.player1)){
-            tab = g.p1Weights;
-        }
-        else{
-            tab = g.p2Weights;
-        }
-        int c = g.currentPlayer.coups.size();
-        int max = 0;
-        for(Location l:g.placeable){
-            max+= tab[c][l.row][l.col];
-        }
-        return max;
-    }
     private Location evalX2(Game g){
         Location res = new Location();
         int max = Integer.MIN_VALUE;
         for (Location l:g.placeable) {
             Game futur =new Game(g);
             futur.updateBoard(l.row, l.col);
-            int tmp = g.totalWeight[l.row][l.col]+futur.getScoreColor(color);
+            int tmp = g.totalWeight[l.row][l.col]+evaluation(futur, 0, 0);
             if(tmp>max){
                 max=tmp;
                 res=l;
@@ -170,7 +154,6 @@ class IA extends Player{
         else{
             tab = g.p2Weights;
         }
-        
         int c = g.currentPlayer.coups.size();
         int max = Integer.MIN_VALUE;
         for(Location l:g.placeable){
@@ -180,26 +163,15 @@ class IA extends Player{
                 res=l;
             }
         }
-//        List<Location> resultList = new ArrayList<>();
-//        for(Location l:g.placeable){
-//            int tmp = tab[c][l.row][l.col];
-//            if((max - tmp) <= 10)
-//                resultList.add(l);
-//        }
-//        Collections.shuffle(resultList);
         return res;
     }
-    
-    
         private int evaluation(Game game, int eval, int depth){
-    //        System.out.println("eval : "+game.getScoreColor(color));
             if(!game.isRunningGame())
-                return game.getScoreColor(color)>0?100*depth:-100*depth;
+                return game.getScoreColor(color)>0?1000*(depth+1):-1000*(depth+1);
             switch(eval){
                 case 0:
                     return game.getScoreColor(color);
-                case 1:
-                    return evalstat(game);
+                default:break;
             }
 
             return 0;
@@ -218,12 +190,11 @@ class IA extends Player{
                 
             case 3: return alphaBeta(game, 0, 6);
                 
-            case 4: return alphaBeta(game, 1, 2);
-                
-            case 5:return statIA(game);
+            case 4:return statIA(game);
             
-            case 6: return evalX2(game);
-                
+            case 5: return evalX2(game);
+            
+            case 6: return myIAMinMax(game, 0, 2);
             default:
                 throw new AssertionError();
         }

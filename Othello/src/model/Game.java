@@ -7,7 +7,6 @@
 package model;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,12 +15,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.Timer;
 
 public class Game extends Observable implements Runnable {
-    //colors
-    public static final String RED = "\u001B[31m";
-    public static final String RESET = "\u001B[0m";
     // Statics variables
     public static final int black =-1;
     public static final int empty  =0;
@@ -36,16 +31,16 @@ public class Game extends Observable implements Runnable {
     protected int nbWhite;
     protected Player currentPlayer;
     protected int [][] board;
-    protected int [][] totalWeight1;
-    protected int [][] totalWeight2;
-    protected int [][] totalWeight;
-    protected int[] [][] p1Weights;
-    protected int[] [][] p2Weights;
-    protected Set<Location> placeable;
+    protected int [][] totalWeight1;//Sum of files weights for player 1
+    protected int [][] totalWeight2;//Sum of files weights for player 2
+    protected int [][] totalWeight;//Sum totalWeight1 and totalWeight2
+    protected int[] [][] p1Weights;//weight by move for player 1
+    protected int[] [][] p2Weights;//weight by move for player 2
+    protected Set<Location> placeable;// playable move
     protected boolean runningIA;
     protected boolean runningGame;
-    protected boolean copy;
-    protected Thread gameThread;
+    protected boolean copy;//determine if we're actually working on a copy of the real game or not
+    protected Thread gameThread;//Thread for IA player
 
     /******************
      * Initialisation *
@@ -87,9 +82,12 @@ public class Game extends Observable implements Runnable {
         
         //Players initialization (Temporar init)
 //        player1 = new Player("Bernard", black);
-        player1 = new IA("Bot 1",black, 0);
-        player2 = new IA("Bot 2",white, 1);
-//        player1 = new IA("Bot what ?", black,1);
+        player1 = new IA("Bot 1",black, 0);//Random
+        player2 = new IA("Bot 2",white, 1);//AlphaBeta prof 2
+//        player2 = new IA("Bot 2",white, 2);//AlphaBeta prof 4
+//        player2 = new IA("Bot 2",white, 4);//statIA
+//        player2 = new IA("Bot 2",white, 5);//evalX2
+//        player2 = new IA("Bot 2",white, 6);//MinMax
         currentPlayer = player1;
         runningGame=true;
     }
@@ -242,19 +240,11 @@ public class Game extends Observable implements Runnable {
             currentPlayer=player2;
         else currentPlayer=player1;
     }
-    /**
-     * 
-     */
     public Player getWinner(){
-        int p1 = 0, p2 = 0;
-        for (int i = 0; i < gameSize; i++) {
-            for (int j = 0; j < gameSize; j++) {
-                if(board[i][j]==player1.color) p1++;
-                if(board[i][j]==player2.color) p2++;
-            }
-        }
-        if(p1>p2) return player1;
-        if(p1<p2) return player2;
+        if(nbBlack>nbWhite)
+            return player1;
+        else if(nbBlack<nbWhite)
+            return player2;
         return null;
     }
     
@@ -340,7 +330,7 @@ public class Game extends Observable implements Runnable {
         return false;
     }
     /**
-     * updatePlaceable will update the placeable list after each update
+     * updatePlaceable will update the placeable list after each updateBoard
      */
     private void updatePlaceable(){
         int color = currentPlayer.color;
@@ -372,20 +362,9 @@ public class Game extends Observable implements Runnable {
             }
         }
     }
-    /**
-     * isPlaceable
-     * @param l
-     * @return 
-     */
     public boolean isPlaceable(Location l) {
         return placeable.contains(l);
     }
-    /**
-     * isPlaceable
-     * @param i
-     * @param j
-     * @return 
-     */
     public boolean isPlaceable(int i, int j) {
         return placeable.contains(new Location(i, j));
     } 
@@ -395,9 +374,8 @@ public class Game extends Observable implements Runnable {
      * updateBoard will update for each move the board
      * @param i row of the new move
      * @param j column of the new move
-     * @return Set<Location> modified locations list
      *************************************************************************/
-    public Set<Location> updateBoard(int i,int j){
+    public void updateBoard(int i,int j){
         if(runningGame){
             if(!isPlaceable(i, j))
                 throw new GameException("updateBoard : unplaceable location");
@@ -414,8 +392,6 @@ public class Game extends Observable implements Runnable {
             }
             setNbColor(color, res.size()-1);
             if(!copy){
-//                System.out.println((currentPlayer.equals(player1)?"p1 c":"p2 c")+currentPlayer.coups.size());
-//                System.out.println("row :"+i+" col "+j);
                 currentPlayer.coups.add(new Location(i, j));
             }
             switchPlayer();
@@ -427,7 +403,8 @@ public class Game extends Observable implements Runnable {
                     if(currentPlayer instanceof IA){
                         setChanged();
                         notifyObservers("IA");
-    //                    runThread();
+//                        runThread();
+                        //Those 2 next lines replace runThread for a fast running without interface
                         Location l = currentPlayer.getMove(this);
                         updateBoard(l.row, l.col);
                     }else{
@@ -436,11 +413,8 @@ public class Game extends Observable implements Runnable {
                     }
                 }
             }
-            return res;
         }
-        return new HashSet<>();
     }
-    
     private void setNbColor(int color, int score){
         if(color == black){
             nbWhite = nbWhite-score;
@@ -451,7 +425,6 @@ public class Game extends Observable implements Runnable {
             nbWhite+= score+1;
         }
     }
-    
     public int getScoreColor(int color){
         if(color == black)
             return nbBlack-nbWhite;
@@ -460,49 +433,13 @@ public class Game extends Observable implements Runnable {
         else
             throw new GameException("Game color doesn't exist");
     }
-    
-    
     public int getColor(int i, int j){
         return board[i][j];
     }
     public int getCurrentColor(){
         return currentPlayer.color;
     }
-    /**
-     * Display functions with an highlight of a specified list of location
-     * @param highlight locations'list we want to highlight
-     * @return String to show the game in the consol
-     */
-    public String toString(Set<Location> highlight) {
-        String res="    0  1  2  3  4  5  6  7\n___________________________\n";
-        for (int i = 0; i < gameSize; i++) {
-            res+=i+"| ";
-            for (int j = 0; j < gameSize; j++) {
-                if(highlight.contains(new Location(i, j))){
-                    res+=RED;
-                }
-                if(board[i][j]>=0)
-                    res+=" ";
-                res+=board[i][j]+" "+RESET;
-            }
-            res+="\n";
-        }
-        return res;
-    }
-    @Override
-    public String toString() {
-        String res="";
-        for (int i = 0; i < gameSize; i++) {
-            for (int j = 0; j < gameSize; j++) {
-                if(board[i][j]>=0)
-                    res+=" ";
-                res+=board[i][j]+" ";
-            }
-            res+="\n";
-        }
-        return res;
-    }
-
+    
     @Override
     public void run() {
         if(!runningIA && runningGame){
@@ -510,7 +447,7 @@ public class Game extends Observable implements Runnable {
             synchronized(this){
                 for (int i = 3; i>0; i--) {
                     setChanged();
-                    notifyObservers(currentPlayer.name+" "+i+"sec");
+                    notifyObservers(currentPlayer.name+" "+i);
                     try {
                         gameThread.sleep(IATEMPO);
                     } catch (InterruptedException ex) {
@@ -551,8 +488,9 @@ public class Game extends Observable implements Runnable {
                 p1++;
             else if(g.getWinner().equals(g.player2))
                 p2++;
-            coup+=g.player1.coups.size();
+            coup+=g.player2.coups.size();
             System.out.println("Coups : "+(int)coup/(i+1)+" P1 : "+(int)100*p1/(i+1)+"% P2 : "+(int)100*p2/(i+1)+"% NULL : "+(int)100*n/(i+1)+"%");
         }
+        System.out.println("Coups totaux : "+coup);
     }
 }
