@@ -81,8 +81,8 @@ public class Game extends Observable implements Runnable {
         placeable.add(new Location(5, 4));
         
         //Players initialization (Temporar init)
-//        player1 = new Player("Bernard", black);
-        player1 = new IA("Bot 1",black, 0);//Random
+        player1 = new Player("Bernard", black);
+//        player1 = new IA("Bot 1",black, 0);//Random
         player2 = new IA("Bot 2",white, 1);//AlphaBeta prof 2
 //        player2 = new IA("Bot 2",white, 2);//AlphaBeta prof 4
 //        player2 = new IA("Bot 2",white, 4);//statIA
@@ -403,10 +403,10 @@ public class Game extends Observable implements Runnable {
                     if(currentPlayer instanceof IA){
                         setChanged();
                         notifyObservers("IA");
-//                        runThread();
+                        runThread();
                         //Those 2 next lines replace runThread for a fast running without interface
-                        Location l = currentPlayer.getMove(this);
-                        updateBoard(l.row, l.col);
+//                        Location l = currentPlayer.getMove(this);
+//                        updateBoard(l.row, l.col);
                     }else{
                         setChanged();
                         notifyObservers("Your turn "+currentPlayer.name);
